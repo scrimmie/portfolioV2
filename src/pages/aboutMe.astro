@@ -1,0 +1,42 @@
+---
+import BrowserWindow from "../components/BrowserWindow.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Welcome to Astro.">
+  <div class="flex w-full h-full items-left justify-center flex-col p-20">
+    <BrowserWindow url="aboutMe.com">
+      <img
+        src="/davidDapice.jpg"
+        class="relative flex w-full h-full object-cover flex-row"
+      />
+      <div class="absolute flex w-full h-full flex-row items-center">
+        <div class="flex w-1/2 h-full"></div>
+        <div
+          class="flex w-1/2 h-min flex-col items-center justify-center bg-white backdrop-blur-md bg-opacity-50 bg-clip-padding"
+        >
+          <h1
+            class="font-JetbrainsMono text-6xl self-center text-orange-600 py-8"
+          >
+            Hello
+          </h1>
+          <p
+            class="text-md flex h-min w-full flex-col justify-center p-3 font-JetbrainsMono text-orange-600"
+          >
+            I am a driven, passionate technologist who combines logic and
+            discipline with interpersonal skills that power new thinking.
+            <br />
+            <br /> As far back as I can remember, I&apos;ve had a fascination with
+            how things work. My natural curiosity has helped me learn and discover.
+            <br />
+            <br /> As a team player, I thrive on collaboration, and have an innate
+            interest in the world around me — especially when technology can impact
+            the lives of others.
+          </p>
+        </div>
+      </div>
+    </BrowserWindow>
+  </div>
+</Layout>
+
+<style></style>
