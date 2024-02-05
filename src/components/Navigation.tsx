@@ -38,7 +38,7 @@ export const Navigation = () => {
 
   return (
     <nav className="w-full flex justify-center">
-      <NavLinks className=" flex flex-row gap-10 text-md" />
+      <NavLinks className="flex flex-row gap-10 text-md" />
     </nav>
   );
 };
