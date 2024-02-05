@@ -13,10 +13,10 @@ export const Navigation = () => {
     { name: "Home", href: "/", id: 1, icon: <TfiHome /> },
     { name: "About Me", href: "/aboutMe", id: 2, icon: <TfiUser /> },
     { name: "Development", href: "/development", id: 3, icon: <IoCode /> },
-    { name: "Projects", href: "/projects", id: 3, icon: <TfiFolder /> },
-    { name: "Photography", href: "/photography", id: 4, icon: <TfiCamera /> },
-    { name: "Creative", href: "/creative", id: 5, icon: <TfiBrushAlt /> },
-    { name: "Contact", href: "/contact", id: 6, icon: <TfiEmail /> },
+    { name: "Projects", href: "/projects", id: 4, icon: <TfiFolder /> },
+    { name: "Photography", href: "/photography", id: 5, icon: <TfiCamera /> },
+    { name: "Creative", href: "/creative", id: 6, icon: <TfiBrushAlt /> },
+    { name: "Contact", href: "/contact", id: 7, icon: <TfiEmail /> },
   ];
 
   const NavLinks = ({ className }: { className: string }) => (
