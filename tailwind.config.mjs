@@ -8,6 +8,19 @@ export default {
       fontFamily: {
         JetbrainsMono: ["JetBrainsMono", "monospace"],
       },
+      animation: {
+        "skew-scroll": "skew-scroll 20s linear infinite",
+      },
+    },
+    keyframes: {
+      "skew-scroll": {
+        "0%": {
+          transform: "translateY(0)",
+        },
+        "100%": {
+          transform: "translateY(-100%)",
+        },
+      },
     },
   },
   plugins: [],
