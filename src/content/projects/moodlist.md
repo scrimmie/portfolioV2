@@ -1,17 +1,16 @@
 ---
 title: "Moodlist"
+description: "MoodList is a proof of concept, Spotify-based app designed around a customized user-generated playlist."
 sortOrder: 2
-logoImage: { src: "/src/assets/moodListLogo.png", alt: "MoodList Logo" }
-images: [{ src: "/moodlist/logo.png", alt: "MoodlistLogo" }]
-language: "en"
-tags: ["projects", "react"]
-projectDate: 2022-07-01,
+logoImage: "/src/assets/moodListLogo.png"
+images:
+  [
+    "/src/assets/moodListSplashPage.png",
+    "/src/assets/moodListDashboard.png",
+    "/src/assets/moodListPlaylistView.png",
+    "/src/assets/moodListPlaylists.png",
+  ]
+projectDate: "2022-07-01"
 ---
 
 # BIG BOI PROJECT
-
-The new food pyramid:
-
-![a food pyramid where every tier is cheese](https://res.cloudinary.com/jlengstorf/image/upload/v1674096555/blog/eat-cheese-every-day.jpg)
-
-Eat cheese every day and your whole life will change.

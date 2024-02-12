@@ -1,22 +1,13 @@
 ---
 title: "CryptoTracker"
+description: "CryptoTracker is a real-time portfolio tracker for cryptocurrency traders."
 sortOrder: 4
-logoImage:
-  { src: "/src/assets/cryptoTrackerLogo.png", alt: "CryptoTracker Logo" }
+logoImage: "/src/assets/cryptoTrackerLogo.png"
 images:
   [
-    { src: "/cryptoTracker/logo.png", alt: "CryptoTracker" },
-    {
-      src: "/cryptoTracker/device.jpg",
-      alt: "CryptoTracker monitoring device",
-    },
-    { src: "/cryptoTracker/interface.png", alt: "CryptoTracker interface" },
-    {
-      src: "/cryptoTracker/settings.png",
-      alt: "CryptoTracker configuration JSON file",
-    },
+    "/src/assets/cryptoTrackerDevice.jpg",
+    "/src/assets/cryptoTrackerInterface.png",
+    "/src/assets/cryptoTrackerSettings.png",
   ]
-language: "en"
-tags: ["projects", "react"]
-projectDate: 2022-07-01,
+projectDate: "2022-07-01"
 ---

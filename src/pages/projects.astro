@@ -4,13 +4,6 @@ import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
 import ImageCarousel from "../components/ImageCarousel.astro";
 const allProjects = await getCollection("projects");
-const projectLogoAndSlug = allProjects
-  .sort((a, b) => {
-    return a.data.sortOrder - b.data.sortOrder;
-  })
-  .map((projectEntry) => {
-    return { image: projectEntry.data.logoImage, slug: projectEntry.slug };
-  });
 ---
 
 <Layout title="David D'Apice - Development">
@@ -19,7 +12,7 @@ const projectLogoAndSlug = allProjects
       <div
         class="flex h-full w-full flex-col items-center justify-center overflow-scroll bg-white bg-opacity-30 bg-clip-padding backdrop-blur-md backdrop-filter"
       >
-        <ImageCarousel projects={projectLogoAndSlug} />
+        <ImageCarousel projects={allProjects} />
       </div>
     </BrowserWindow>
   </div>

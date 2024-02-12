@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import BrowserWindow from "../components/BrowserWindow.astro";
+import Layout from "./Layout.astro";
+import { SlickSlider } from "../components/SlickSlider";
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+  <div class="flex w-full h-full items-left justify-center flex-col p-20">
+    <BrowserWindow url={"projects/" + frontmatter.title + ".com"}>
+      <div class="max-w-3xl mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+          <h1 class="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+          <p class="text-gray-600">{frontmatter.description}</p>
+        </header>
+
+        <div class="mb-8 block">
+          <SlickSlider
+            images={frontmatter.images.map((item: any) => {
+              return item.src;
+            })}
+            client:only="react"
+          />
+        </div>
+
+        <h2 class="text-2xl font-bold mb-4">Overview:</h2>
+        <p class="mb-4">
+          Harnessing the power of quantum mechanics, our project, Quantum Leap,
+          aims to revolutionize the landscape of computing. By delving into the
+          intricate realm of quantum computing, we are pioneering breakthroughs
+          that promise to redefine the limits of computation.
+        </p>
+
+        <h2 class="text-2xl font-bold mb-4">About the Project:</h2>
+        <p class="mb-4">
+          Quantum Leap represents a culmination of years of dedicated research
+          and development in the field of quantum computing. Through meticulous
+          experimentation and innovative design, our team has constructed a
+          platform that showcases the immense potential of quantum technologies.
+        </p>
+
+        <h3 class="text-xl font-bold mb-2">Key Features:</h3>
+        <ul class="list-disc pl-6 mb-4">
+          <li>
+            Quantum Supremacy: Our project achieves feats previously deemed
+            impossible by classical computing standards, demonstrating the
+            superiority of quantum algorithms.
+          </li>
+          <li>
+            Scalability: Designed with scalability in mind, Quantum Leap lays
+            the groundwork for future advancements in quantum computing
+            architecture, paving the way for unprecedented computational
+            capabilities.
+          </li>
+          <li>
+            Real-world Applications: Beyond theoretical constructs, our project
+            explores practical applications of quantum computing in diverse
+            fields such as cryptography, optimization, and material science.
+          </li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-4">Future Prospects:</h2>
+        <p class="mb-4">
+          As we continue to refine and expand the horizons of Quantum Leap, we
+          envision a future where quantum computing becomes an integral part of
+          everyday life, driving innovation, solving complex problems, and
+          unlocking new frontiers of knowledge.
+        </p>
+
+        <p class="mb-8">
+          Join us on this extraordinary journey as we transcend the boundaries
+          of conventional computing and embark on a Quantum Leap into the
+          future.
+        </p>
+      </div>
+      <p>{frontmatter.projectDate.toString().slice(0, 10)}</p>
+      <p><em>{frontmatter.title}</em></p>
+      <slot />
+    </BrowserWindow>
+  </div>
+</Layout>

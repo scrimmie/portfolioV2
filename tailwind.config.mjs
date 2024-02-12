@@ -9,16 +9,16 @@ export default {
         JetbrainsMono: ["JetBrainsMono", "monospace"],
       },
       animation: {
-        "skew-scroll": "skew-scroll 20s linear infinite",
+        marquee: "marquee 30s linear infinite",
       },
     },
     keyframes: {
-      "skew-scroll": {
+      marquee: {
         "0%": {
-          transform: "translateY(0)",
+          transform: "translateX(0%)",
         },
         "100%": {
-          transform: "translateY(-100%)",
+          transform: "translateX(-200%)",
         },
       },
     },
