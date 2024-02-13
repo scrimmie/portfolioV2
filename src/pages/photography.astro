@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import image from "../assets/photos/camera.svg";
+import BrowserWindow from "../components/BrowserWindow.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="David D'Apice">
+  <div class="flex w-full h-full items-left justify-center flex-col">
+    <BrowserWindow url="photography.com">
+      <div
+        class="flex w-full h-[200%] flex-col bg-orange-200 backdrop-blur-md bg-opacity-50 bg-clip-padding"
+      >
+        <div class="flex w-full h-full flex-col items-center justify-center">
+          <Image src={image} alt="Camera Logo" />
+          <h1 class="font-JetbrainsMono text-white mt-6 text-lg">
+            David D'Apice Photography
+          </h1>
+        </div>
+        <div
+          class="flex w-full h-full flex-col items-center justify-center bg-white"
+        >
+        </div>
+      </div>
+    </BrowserWindow>
+  </div>
+</Layout>

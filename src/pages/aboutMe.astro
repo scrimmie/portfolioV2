@@ -1,18 +1,19 @@
 ---
+import { Image } from "astro:assets";
+import image from "../assets/backgrounds/davidDapice.jpg";
 import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="David D'Apice">
-  <div class="flex w-full h-full items-left justify-center flex-col p-20">
+  <div class="flex w-full h-full items-left justify-center flex-col">
     <BrowserWindow url="aboutMe.com">
-      <!-- <img
-        src="/davidDapice.jpg"
-        class="relative flex w-full h-full object-cover flex-row"
-      /> -->
-      <div
-        class="flex w-full h-full flex-row items-center bg-[url('/davidDapice.jpg')] bg-cover"
-      >
+      <Image
+        src={image}
+        alt="Image of author"
+        class="absolute inset-0 w-full h-full z-0 object-cover"
+      />
+      <div class="relative flex w-full h-full flex-row items-center z-20">
         <div class="flex w-1/2 h-full"></div>
         <div
           class="flex w-1/2 h-min flex-col items-center justify-center bg-white backdrop-blur-md bg-opacity-50 bg-clip-padding"
@@ -40,5 +41,3 @@ import Layout from "../layouts/Layout.astro";
     </BrowserWindow>
   </div>
 </Layout>
-
-<style></style>

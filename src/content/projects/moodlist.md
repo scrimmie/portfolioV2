@@ -2,13 +2,13 @@
 title: "Moodlist"
 description: "MoodList is a proof of concept, Spotify-based app designed around a customized user-generated playlist."
 sortOrder: 2
-logoImage: "/src/assets/moodListLogo.png"
+logoImage: "/src/assets/projects/moodListLogo.png"
 images:
   [
-    "/src/assets/moodListSplashPage.png",
-    "/src/assets/moodListDashboard.png",
-    "/src/assets/moodListPlaylistView.png",
-    "/src/assets/moodListPlaylists.png",
+    "/src/assets/projects/moodListSplashPage.png",
+    "/src/assets/projects/moodListDashboard.png",
+    "/src/assets/projects/moodListPlaylistView.png",
+    "/src/assets/projects/moodListPlaylists.png",
   ]
 projectDate: "2022-07-01"
 ---

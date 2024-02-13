@@ -4,6 +4,8 @@ interface Props {
   title: string;
 }
 import { ViewTransitions } from "astro:transitions";
+import image from "../assets/backgrounds/background.jpg";
+import { Image } from "astro:assets";
 const { title } = Astro.props;
 ---
 
@@ -20,17 +22,21 @@ const { title } = Astro.props;
   </head>
 </html>
 <main class="flex w-screen h-screen">
-  <slot />
+  <Image
+    src={image}
+    alt="background image"
+    class="absolute inset-0 w-full h-full"
+  />
+  <div class="z-20">
+    <slot />
+  </div>
   <footer
-    class="fixed bottom-0 left-0 flex h-16 w-full items-center justify-center px-4 text-gray-700"
+    class="z-20 fixed bottom-0 left-0 flex h-16 w-full items-center justify-center px-4 text-gray-700"
   >
     <Navigation client:load />
   </footer>
 </main>
 <style>
-  main {
-    background-image: url("/background.jpg");
-  }
   @font-face {
     font-family: "JetBrainsMono";
     src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
