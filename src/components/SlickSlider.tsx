@@ -11,10 +11,12 @@ export const SlickSlider = ({ images }: { images: string[] }) => {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings}>
-      {images.map((image, index) => {
-        return <img src={image} key={index} />;
-      })}
-    </Slider>
+    <div className="block w-full h-full">
+      <Slider {...settings}>
+        {images.map((image, index) => {
+          return <img src={image} key={index} />;
+        })}
+      </Slider>
+    </div>
   );
 };
