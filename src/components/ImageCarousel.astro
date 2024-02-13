@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="flex w-full h-full items-center justify-center">
+  <div class="flex h-full items-center">
+    <div class="h-full relative overflow-hidden">
+      <div class="w-full h-full animate-marquee">
+        <!-- the number of colums should always be 2 times the number of projects -->
+        <div class="m-auto grid h-full grid-cols-8 w-[400%] place-items-center">
+          {
+            projects
+              .sort(
+                (project1, project2) =>
+                  project1.data.sortOrder - project2.data.sortOrder
+              )
+              .map((project) => {
+                return (
+                  <a
+                    class="h-full w-full flex justify-center items-center px-10 hover:scale-[1.05] hover:shadow-xl"
+                    href={"/projects/" + project.slug}
+                  >
+                    <Image
+                      class="h-fit w-fit object-cover"
+                      src={project.data.logoImage}
+                      alt={project.data.title}
+                    />
+                  </a>
+                );
+              })
+          }
+          {
+            projects.map((project) => {
+              return (
+                <a
+                  class="h-full w-full flex justify-center items-center px-10 hover:scale-[1.05] hover:shadow-xl"
+                  href={"/projects/" + project.slug}
+                >
+                  <Image
+                    class="h-fit w-fit object-cover"
+                    src={project.data.logoImage}
+                    alt={project.data.title}
+                  />
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

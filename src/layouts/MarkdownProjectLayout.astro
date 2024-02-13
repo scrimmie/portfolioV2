@@ -1,0 +1,170 @@
+---
+import BrowserWindow from "../components/BrowserWindow.astro";
+import Layout from "./Layout.astro";
+import { SlickSlider } from "../components/SlickSlider";
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+  <div class="flex w-full h-full items-left justify-center flex-col p-20">
+    <BrowserWindow url={"projects/" + frontmatter.title + ".com"}>
+      <div
+        class="overflow-scroll w-full h-max px-4 py-8 bg-black bg-opacity-50 bg-clip-padding backdrop-blur-md backdrop-filter flex justify-center items-center flex-col"
+      >
+        <h1 class="text-9xl mb-2 font-JetbrainsMono text-white">
+          {frontmatter.title}
+        </h1>
+        <p class="text-white font-JetbrainsMono text-1xl mb-3">
+          {frontmatter.projectDate.toString().slice(0, 15)}
+        </p>
+
+        <p class="text-gray-300 font-JetbrainsMono">
+          {frontmatter.description}
+        </p>
+        {
+          frontmatter.projectLink && (
+            <a
+              href={frontmatter.projectLink}
+              target="_blank"
+              class="my-4 text-blue-500 font-JetbrainsMono text-2xl hover:underline"
+            >
+              {frontmatter.title + " " + "Link"}
+            </a>
+          )
+        }
+        <div class="mb-8 block w-1/2 mt-8">
+          <SlickSlider
+            images={frontmatter.images.map((item: any) => {
+              return item.src;
+            })}
+            client:only="react"
+          />
+        </div>
+        <hr class="w-full border-t-2 mb-6 mt-6" />
+        <article class="w-1/2">
+          <slot />
+        </article>
+      </div>
+    </BrowserWindow>
+  </div>
+</Layout>
+
+<style is:global>
+  /******************************************* 
+  Rich Text Styles
+  *******************************************/
+
+  /* Headers */
+  article h1 {
+    @apply text-4xl font-bold mb-8 text-white;
+  }
+
+  article h2 {
+    @apply text-3xl font-bold mb-8 text-white;
+  }
+
+  article h3 {
+    @apply text-2xl font-bold mb-6 text-white;
+  }
+
+  article h4 {
+    @apply text-xl font-bold mb-4 text-white;
+  }
+
+  article h5 {
+    @apply text-lg font-bold mb-4 text-white;
+  }
+
+  article h6 {
+    @apply text-base font-bold mb-4 text-white;
+  }
+
+  /* Horizontal rules */
+  article hr {
+    @apply text-white my-8;
+  }
+
+  article a {
+    @apply text-blue-500 leading-relaxed hover:underline;
+  }
+
+  /* Typographic replacements */
+  article p {
+    @apply mb-8 leading-relaxed text-white;
+  }
+
+  /* Emphasis */
+  article strong {
+    @apply font-bold text-xl leading-relaxed;
+  }
+
+  article em {
+    @apply italic text-xl leading-relaxed;
+  }
+
+  article del {
+    @apply line-through text-xl leading-relaxed;
+  }
+
+  /* Blockquotes */
+  article blockquote {
+    @apply border-l-4 border-gray-400 pl-4 py-2 mb-4;
+  }
+
+  /* Lists */
+  article ul {
+    @apply list-disc pl-4 mb-4 text-white;
+  }
+
+  article ol {
+    @apply list-decimal pl-4 mb-4 text-white;
+  }
+
+  article li {
+    @apply mb-2 text-white;
+  }
+
+  article li > ul {
+    @apply list-disc pl-4 mb-2;
+  }
+
+  article li > ol {
+    @apply list-decimal pl-4 mb-2;
+  }
+
+  /* Code blocks */
+  article pre {
+    @apply font-mono text-white  rounded p-4  my-6;
+  }
+
+  article code {
+    @apply font-mono text-white rounded px-2 py-1;
+  }
+
+  /* Tables */
+  article table {
+    @apply w-full border-collapse text-white my-6;
+  }
+
+  article th {
+    @apply text-left py-2 px-4 font-semibold border-b text-white;
+  }
+
+  article td {
+    @apply py-2 px-4 border-b;
+  }
+
+  /* Images */
+  article img {
+    @apply w-full object-cover rounded-xl my-6;
+  }
+
+  article {
+    @apply font-JetbrainsMono;
+  }
+
+  /* Custom containers */
+  article .warning {
+    @apply bg-yellow-100 border-yellow-500 text-yellow-700 px-4 py-2 rounded-lg mb-4;
+  }
+</style>
