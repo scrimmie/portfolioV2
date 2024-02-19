@@ -6,7 +6,7 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
-  <div class="flex w-full h-full items-left justify-center flex-col p-20">
+  <div class="flex w-full h-full items-left justify-center flex-col">
     <BrowserWindow url={"projects/" + frontmatter.title + ".com"}>
       <div
         class="overflow-scroll w-full h-max px-4 py-8 bg-black bg-opacity-50 bg-clip-padding backdrop-blur-md backdrop-filter flex justify-center items-center flex-col"
@@ -50,10 +50,6 @@ const { frontmatter } = Astro.props;
 </Layout>
 
 <style is:global>
-  /******************************************* 
-  Rich Text Styles
-  *******************************************/
-
   /* Headers */
   article h1 {
     @apply text-4xl font-bold mb-8 text-white;

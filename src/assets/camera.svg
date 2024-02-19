@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-1734fa1a-cc81-4ae9-8366-e0b595ea4b2e" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.81 309.97">
+  <defs>
+    <style>
+      .uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e {
+        stroke-width: 3px;
+      }
+
+      .uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e, .uuid-faed00df-6e95-4fab-8a40-93907ba70ce2 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+
+      .uuid-faed00df-6e95-4fab-8a40-93907ba70ce2 {
+        stroke-width: 2px;
+      }
+
+      .uuid-322523fb-80df-47e0-9ad2-87c3f6b5e1ce {
+        fill: #fff;
+        font-family: ShreeDev0714, 'Shree Devanagari 714';
+        font-size: 150px;
+      }
+    </style>
+  </defs>
+  <g id="uuid-b35b71d0-0e8b-4728-aee4-06d1a3bc7ecb" data-name="Layer 1">
+    <rect class="uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e" x="1.5" y="55.72" width="422.81" height="251.64" rx="67.54" ry="67.54"/>
+    <circle class="uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e" cx="212.9" cy="181.54" r="73.55"/>
+    <circle class="uuid-faed00df-6e95-4fab-8a40-93907ba70ce2" cx="212.9" cy="181.54" r="65.37"/>
+    <rect class="uuid-faed00df-6e95-4fab-8a40-93907ba70ce2" x="291.93" y="73.47" width="102.98" height="37.49" rx="18.75" ry="18.75"/>
+    <rect class="uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e" x="62.98" y="49.79" width="38.49" height="5.93" rx="2.97" ry="2.97"/>
+    <text class="uuid-322523fb-80df-47e0-9ad2-87c3f6b5e1ce" transform="translate(12.58 235.08)"><tspan x="0" y="0">D</tspan></text>
+    <text class="uuid-322523fb-80df-47e0-9ad2-87c3f6b5e1ce" transform="translate(414.14 237.86) rotate(-180) scale(1 -1)"><tspan x="0" y="0">D</tspan></text>
+    <polyline class="uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e" points="110.6 55.72 129.69 1.5 286.46 1.5 303.63 55.07"/>
+    <polyline class="uuid-431467d2-f2d9-4175-ba11-7cf3559d9a3e" points="329.82 55.47 329.82 35.92 377.51 35.92 377.51 58.97"/>
+  </g>
+</svg>
