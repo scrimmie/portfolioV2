@@ -10,12 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/react": "^3.0.9",
+    "@astrojs/check": "^0.5.4",
+    "@astrojs/react": "^3.0.10",
     "@astrojs/tailwind": "^5.1.0",
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
-    "astro": "^4.3.0",
+    "astro": "^4.4.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.5",
     "react": "^18.2.0",
