@@ -1,0 +1,10 @@
+---
+const { link, platform } = Astro.props;
+---
+
+<a
+  class="w-fit h-16 flex flex-col justify-center items-centyer mx-5"
+  href={link}
+  target="#blank"
+  ><slot /><h1 class="text-white font-JetbrainsMono text-sm">{platform}</h1></a
+>
