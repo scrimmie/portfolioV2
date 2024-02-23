@@ -1,36 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { AnimatedText } from "../components/AnimatedText.tsx";
 ---
 
 <Layout title="David D'Apice">
   <div
     class="fixed top-1/2 -translate-y-1/2 w-max h-max items-center justify-center flex-col pl-12"
   >
-    <h2 class="text-white text-9xl font-JetbrainsMono">David D'Apice</h2>
-    <h1 class="text-white text-2xl pl-2 font-JetbrainsMono pt-10">
-      Software Engineer | Photographer | Creative | Music Nerd
-    </h1>
+    <AnimatedText
+      className="text-white text-9xl font-JetbrainsMono"
+      text="David D'Apice"
+      client:load
+    />
+    <AnimatedText
+      className="text-white text-2xl pl-2 font-JetbrainsMono mt-5"
+      text="Software Engineer | Photographer | Creative | Music Nerd"
+      client:load
+    />
   </div>
 </Layout>
-<style>
-  h2 {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  @keyframes cursor-blink {
-    0% {
-      opacity: 0;
-    }
-  }
-
-  h2::after {
-    content: " ";
-    width: 0.05em;
-    height: 1em;
-    background: #ffff;
-    display: inline-block;
-    animation: cursor-blink 1.5s steps(2) infinite;
-  }
-</style>
