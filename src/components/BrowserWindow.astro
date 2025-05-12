@@ -1,4 +1,5 @@
 ---
+import BrowserWindowComponent from "./BrowserWindow";
 interface Props {
   url: string;
 }
@@ -6,11 +7,7 @@ const { url } = Astro.props;
 ---
 
 <div class="relative w-full h-full">
-  <BrowserWindow url={url} client:only>
+  <BrowserWindowComponent url={url} client:only="react">
     <slot />
-  </BrowserWindow>
+  </BrowserWindowComponent>
 </div>
-
-<script>
-  import BrowserWindow from "./BrowserWindow";
-</script>

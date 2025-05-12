@@ -10,7 +10,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="overflow-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="David D'Apice Portfolio" />
@@ -20,22 +20,24 @@ const { title } = Astro.props;
     <ViewTransitions />
     <title>{title}</title>
   </head>
+  <body class="overflow-hidden">
+    <main class="flex w-screen h-screen overflow-hidden">
+      <Image
+        src={image}
+        alt="background image"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="z-10 w-full h-full overflow-auto pb-16">
+        <slot />
+      </div>
+      <footer
+        class="z-20 fixed bottom-0 left-0 flex h-16 w-full items-center justify-center px-4 text-gray-700"
+      >
+        <Navigation client:load />
+      </footer>
+    </main>
+  </body>
 </html>
-<main class="flex w-screen h-screen">
-  <Image
-    src={image}
-    alt="background image"
-    class="absolute inset-0 w-full h-full object-cover"
-  />
-  <div class="z-10">
-    <slot />
-  </div>
-  <footer
-    class="z-0 fixed bottom-0 left-0 flex h-16 w-full items-center justify-center px-4 text-gray-700"
-  >
-    <Navigation client:load />
-  </footer>
-</main>
 <style>
   @font-face {
     font-family: "JetBrainsMono";
@@ -43,5 +45,29 @@ const { title } = Astro.props;
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+  }
+
+  html,
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  :global(.overflow-auto) {
+    scrollbar-width: thin;
+    -ms-overflow-style: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  :global(.overflow-auto::-webkit-scrollbar) {
+    width: 6px;
+  }
+
+  :global(.overflow-auto::-webkit-scrollbar-thumb) {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
   }
 </style>

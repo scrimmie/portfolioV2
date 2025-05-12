@@ -24,6 +24,9 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
   url,
   children,
 }) => {
+  // Track if component is mounted (client-side)
+  const [isMounted, setIsMounted] = useState(false);
+
   // Initialize window state
   const [windowState, setWindowState] = useState<WindowState>({
     x: 0,
@@ -55,9 +58,26 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
     height: 0,
   });
 
+  // Track if we're on client-side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Handle minimized icon initial position - client-side only
+  const [minimizedPos, setMinimizedPos] = useState({ x: 20, y: 0 });
+  useEffect(() => {
+    if (isMounted) {
+      setMinimizedPos({
+        x: 20,
+        y: window.innerHeight - 100,
+      });
+    }
+  }, [isMounted]);
+
   // Initialize window position in the center of the viewport
   useEffect(() => {
     if (
+      isMounted &&
       windowRef.current &&
       !windowState.isMinimized &&
       !windowState.isMaximized
@@ -75,7 +95,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
         height: initialHeight,
       }));
     }
-  }, []);
+  }, [isMounted]);
 
   // Handle window dragging
   const handleDragStart = (e: React.MouseEvent) => {
@@ -113,6 +133,8 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
 
   // Global mouse event handlers for drag and resize
   useEffect(() => {
+    if (!isMounted) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       e.preventDefault();
 
@@ -211,6 +233,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [
+    isMounted,
     isDragging,
     dragOffset,
     windowState.isMaximized,
@@ -226,10 +249,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
 
   // Handle minimized icon dragging
   const [isDraggingMinimized, setIsDraggingMinimized] = useState(false);
-  const [minimizedPos, setMinimizedPos] = useState({
-    x: 20,
-    y: window.innerHeight - 100,
-  });
+
   const [minimizedDragOffset, setMinimizedDragOffset] = useState({
     x: 0,
     y: 0,
@@ -249,6 +269,8 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
   };
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const handleMinimizedMouseMove = (e: MouseEvent) => {
       if (isDraggingMinimized) {
         e.preventDefault();
@@ -282,12 +304,14 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
       document.removeEventListener("mousemove", handleMinimizedMouseMove);
       document.removeEventListener("mouseup", handleMinimizedMouseUp);
     };
-  }, [isDraggingMinimized, minimizedDragOffset]);
+  }, [isMounted, isDraggingMinimized, minimizedDragOffset]);
 
   // Window control handlers
   const handleClose = () => {
-    // Navigate to home page
-    window.location.href = "/";
+    // Navigate to home page - only when client-side
+    if (isMounted) {
+      window.location.href = "/";
+    }
   };
 
   const handleMinimize = () => {
@@ -315,6 +339,8 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
   };
 
   const handleMaximize = () => {
+    if (!isMounted) return;
+
     if (!windowState.isMaximized) {
       // Save current state before maximizing
       setWindowState((prev) => ({
