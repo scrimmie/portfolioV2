@@ -1,5 +1,6 @@
 ---
 import { Navigation } from "../components/Navigation";
+import { MacTopBar } from "../components/MacTopBar";
 interface Props {
   title: string;
 }
@@ -21,13 +22,17 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="overflow-hidden">
+    <!-- Mac-style top bar -->
+    <MacTopBar client:load />
+
     <main class="flex w-screen h-screen overflow-hidden">
       <Image
         src={image}
         alt="background image"
         class="absolute inset-0 w-full h-full object-cover"
       />
-      <div class="z-10 w-full h-full overflow-auto pb-16">
+      <!-- Adjust content area to account for top bar (h-6) and bottom nav (h-16) -->
+      <div class="z-10 w-full h-full overflow-auto pb-16 pt-6">
         <slot />
       </div>
       <footer

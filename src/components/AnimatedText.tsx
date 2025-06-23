@@ -9,11 +9,11 @@ export const AnimatedText = ({
 }) => {
   return (
     <motion.h2
-      className={className + " h-fit overflow-clip whitespace-nowrap"}
-      initial={{ width: 0, opacity: 0 }}
+      className={className + " h-fit whitespace-normal sm:whitespace-nowrap"}
+      initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
       animate={{
-        width: "100%",
-        opacity: 100,
+        clipPath: "inset(0 0% 0 0)",
+        opacity: 1,
       }}
       transition={{ duration: 0.75 }}
     >

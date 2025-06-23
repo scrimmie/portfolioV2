@@ -63,16 +63,57 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
     setIsMounted(true);
   }, []);
 
-  // Handle minimized icon initial position - client-side only
+  // Handle minimized icon initial position - dock to corresponding nav icon
   const [minimizedPos, setMinimizedPos] = useState({ x: 20, y: 0 });
+
+  // Function to get corresponding nav icon position
+  const getNavIconPosition = () => {
+    if (!isMounted) return { x: 20, y: window.innerHeight - 100 };
+
+    // Map URL to page data attributes
+    const urlToPage: { [key: string]: string } = {
+      "/": "home",
+      "/aboutMe": "aboutme",
+      "/development": "development",
+      "/projects": "projects",
+      "/photography": "photography",
+      "/creative": "creative",
+      "/contact": "contact",
+    };
+
+    const currentPath = window.location.pathname;
+    const currentPage = urlToPage[currentPath] || "home";
+
+    // Find the navigation icon element
+    const navIcon = document.querySelector(`a[data-page="${currentPage}"]`);
+
+    if (navIcon) {
+      const iconRect = navIcon.getBoundingClientRect();
+      // Position the minimized window slightly above the icon
+      return {
+        x: iconRect.left + iconRect.width / 2 - 24, // Center on icon (24 = half of minimized window width)
+        y: iconRect.top - 60, // Position above the icon
+      };
+    }
+
+    // Fallback position
+    return { x: 20, y: window.innerHeight - 100 };
+  };
+
   useEffect(() => {
     if (isMounted) {
-      setMinimizedPos({
-        x: 20,
-        y: window.innerHeight - 100,
-      });
+      const position = getNavIconPosition();
+      setMinimizedPos(position);
     }
   }, [isMounted]);
+
+  // Update minimized position when window is minimized
+  useEffect(() => {
+    if (windowState.isMinimized && isMounted) {
+      const position = getNavIconPosition();
+      setMinimizedPos(position);
+    }
+  }, [windowState.isMinimized, isMounted]);
 
   // Initialize window position in the center of the viewport
   useEffect(() => {
@@ -375,7 +416,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
     return (
       <div
         ref={minimizedRef}
-        className="fixed z-50 cursor-grab active:cursor-grabbing flex items-center justify-center bg-zinc-700 border-2 border-zinc-400 rounded-md w-12 h-12 shadow-lg hover:bg-zinc-600 transition-colors"
+        className="fixed z-50 cursor-grab active:cursor-grabbing flex items-center justify-center bg-black/60 backdrop-blur-sm border border-white/30 rounded-lg w-10 h-10 shadow-lg hover:bg-black/70 transition-all duration-300"
         style={{
           left: `${minimizedPos.x}px`,
           top: `${minimizedPos.y}px`,
@@ -383,16 +424,20 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
         onMouseDown={handleMinimizedDragStart}
         onClick={handleMinimize}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 text-white"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="currentColor"
-            d="M6 9V7.25C6 3.845 8.503 1 12 1s6 2.845 6 6.25V9h.5a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 19.5v-8A2.5 2.5 0 0 1 5.5 9Zm-1.5 2.5v8a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-13a1 1 0 0 0-1 1m3-4.25V9h9V7.25c0-2.67-1.922-4.75-4.5-4.75c-2.578 0-4.5 2.08-4.5 4.75"
-          ></path>
-        </svg>
+        <div className="w-4 h-4 text-white/80 group-hover:text-white transition-colors">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <line x1="9" y1="9" x2="15" y2="15" />
+            <line x1="15" y1="9" x2="9" y2="15" />
+          </svg>
+        </div>
       </div>
     );
   }
@@ -494,8 +539,13 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
           </div>
         </div>
 
-        {/* Window content */}
-        <div className="flex-1 overflow-auto">{children}</div>
+        {/* Window content acts as container for responsive queries */}
+        <div
+          className="flex-1 overflow-auto browser-content"
+          style={{ containerType: "inline-size" as any }}
+        >
+          {children}
+        </div>
 
         {/* Resize handle - bottom right */}
         <div

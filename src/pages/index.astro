@@ -5,15 +5,15 @@ import { AnimatedText } from "../components/AnimatedText.tsx";
 
 <Layout title="Home">
   <div
-    class="fixed top-1/2 -translate-y-1/2 w-max h-max items-center justify-center flex-col pl-12"
+    class="fixed top-1/2 -translate-y-1/2 w-full sm:w-max h-max items-center justify-center flex-col px-4 sm:pl-12 max-w-[calc(100vw-2rem)] sm:max-w-none"
   >
     <AnimatedText
-      className="text-white text-9xl font-JetbrainsMono"
+      className="text-white text-4xl sm:text-6xl lg:text-9xl font-JetbrainsMono"
       text="David D'Apice"
       client:load
     />
     <AnimatedText
-      className="text-white text-2xl pl-2 font-JetbrainsMono mt-5"
+      className="text-white text-sm sm:text-xl lg:text-2xl pl-1 sm:pl-2 font-JetbrainsMono mt-2 sm:mt-5"
       text="Software Engineer | Photographer | Creative | Music Nerd"
       client:load
     />

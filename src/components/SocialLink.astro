@@ -1,14 +1,102 @@
 ---
-const { link, platform } = Astro.props;
+interface Props {
+  platform: string;
+  link: string;
+  index?: number;
+}
+
+const { platform, link, index = 0 } = Astro.props;
 ---
 
 <a
-  class="w-fit h-16 flex flex-col justify-center items-centyer mx-5"
   href={link}
-  target="#blank"
-  ><slot /><h1
-    class="text-white font-JetbrainsMono text-sm text-center hover:underline"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/60 hover:bg-cyan-400/20 border border-cyan-400/30 hover:border-cyan-400 rounded-lg transition-all duration-300 overflow-hidden"
+  style={`animation-delay: ${index * 150}ms`}
+>
+  <!-- Animated background -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 to-purple-500/0 group-hover:from-cyan-400/10 group-hover:to-purple-500/10 transition-all duration-300"
+  >
+  </div>
+
+  <!-- Scanning line effect -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/0 to-transparent group-hover:via-cyan-400/30 transition-all duration-500 animate-pulse"
+  >
+  </div>
+
+  <!-- Icon container -->
+  <div
+    class="relative z-10 w-6 h-6 md:w-8 md:h-8 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300"
+  >
+    <slot />
+  </div>
+
+  <!-- Platform label -->
+  <div
+    class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-cyan-400 font-JetbrainsMono text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
   >
     {platform}
-  </h1></a
->
+  </div>
+
+  <!-- Floating particles on hover -->
+  <div class="absolute inset-0 pointer-events-none">
+    {
+      [...Array(4)].map((_, i) => (
+        <div
+          class="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={`
+          left: ${20 + i * 20}%;
+          top: ${30 + (i % 2) * 40}%;
+          animation: float-${i} 2s ease-in-out infinite;
+          animation-delay: ${i * 0.2}s;
+        `}
+        />
+      ))
+    }
+  </div>
+</a>
+
+<style>
+  @keyframes float-0 {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes float-1 {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes float-2 {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes float-3 {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+</style>
