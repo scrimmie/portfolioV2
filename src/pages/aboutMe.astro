@@ -8,38 +8,924 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="About Me">
   <div class="flex w-full h-full items-left justify-center flex-col">
     <BrowserWindow url="aboutMe.com">
-      <div class="relative w-full h-full">
-        <Image
-          src={image}
-          alt="Image of author"
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-        <div class="relative flex w-full h-full flex-row items-center z-20">
-          <div class="flex w-1/2 h-full"></div>
-          <div
-            class="flex w-1/2 h-min flex-col items-center justify-center bg-white backdrop-blur-md bg-opacity-50 bg-clip-padding"
-          >
-            <h1
-              class="font-JetbrainsMono text-6xl self-center text-orange-600 py-8"
+      <div class="w-full h-full overflow-y-auto bg-white about-container">
+        <!-- Shorter Splash Screen Hero -->
+        <section
+          class="splash-hero min-h-[75vh] flex items-center justify-center relative overflow-hidden"
+        >
+          <!-- Animated background elements -->
+          <div class="floating-elements absolute inset-0 pointer-events-none">
+            <!-- Row 1 - Top -->
+            <div
+              class="floating-shape absolute top-[15%] left-[10%] w-4 h-4 rounded-full opacity-60"
+              style="background-color: #EA5A47;"
             >
-              Hello
-            </h1>
-            <p
-              class="text-md flex h-min w-full flex-col justify-center p-3 font-JetbrainsMono text-orange-600"
+            </div>
+            <div
+              class="floating-shape-2 absolute top-[20%] left-[30%] w-3 h-3 opacity-50"
+              style="background-color: #2C5F7A; clip-path: polygon(50% 0%, 0% 100%, 100% 100%)"
             >
-              I am a driven, passionate technologist who combines logic and
-              discipline with interpersonal skills that power new thinking.
-              <br />
-              <br /> As far back as I can remember, I&apos;ve had a fascination with
-              how things work. My natural curiosity has helped me learn and discover.
-              <br />
-              <br /> As a team player, I thrive on collaboration, and have an innate
-              interest in the world around me — especially when technology can impact
-              the lives of others.
-            </p>
+            </div>
+            <div
+              class="floating-shape-3 absolute top-[12%] left-[50%] w-5 h-5 opacity-45 rotate-45"
+              style="background-color: #8B9DC3;"
+            >
+            </div>
+            <div
+              class="floating-shape-4 absolute top-[18%] left-[70%] w-2 h-8 opacity-40"
+              style="background: linear-gradient(to bottom, #EA5A47 0%, transparent 100%);"
+            >
+            </div>
+            <div
+              class="floating-shape-5 absolute top-[25%] left-[90%] w-3 h-3 rounded-full opacity-55"
+              style="background-color: #5C7B8A;"
+            >
+            </div>
+
+            <!-- Row 2 - Upper Middle -->
+            <div
+              class="floating-shape-6 absolute top-[35%] left-[5%] w-6 h-2 rounded-full opacity-50"
+              style="background-color: #1B4A5E;"
+            >
+            </div>
+            <div
+              class="floating-shape-7 absolute top-[40%] left-[25%] w-4 h-4 opacity-45"
+              style="background-color: #D97D3A; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
+            >
+            </div>
+            <div
+              class="floating-shape-8 absolute top-[32%] left-[45%] w-3 h-3 rounded-full opacity-60"
+              style="background-color: #F2A364;"
+            >
+            </div>
+            <div
+              class="floating-shape-9 absolute top-[38%] left-[65%] w-5 h-5 opacity-40 rotate-12"
+              style="background-color: #6B8898;"
+            >
+            </div>
+            <div
+              class="floating-shape-10 absolute top-[42%] left-[85%] w-2 h-6 opacity-45"
+              style="background: linear-gradient(to top, #8B9DC3 0%, transparent 100%);"
+            >
+            </div>
+
+            <!-- Row 3 - Lower Middle -->
+            <div
+              class="floating-shape-11 absolute top-[55%] left-[15%] w-4 h-4 opacity-50"
+              style="background-color: #4A6B7A; clip-path: polygon(50% 0%, 0% 100%, 100% 100%)"
+            >
+            </div>
+            <div
+              class="floating-shape-12 absolute top-[60%] left-[35%] w-3 h-3 rounded-full opacity-55"
+              style="background-color: #F2A364;"
+            >
+            </div>
+            <div
+              class="floating-shape-13 absolute top-[52%] left-[55%] w-5 h-5 opacity-45 rotate-45"
+              style="background-color: #7A9BB0;"
+            >
+            </div>
+            <div
+              class="floating-shape-14 absolute top-[58%] left-[75%] w-4 h-4 opacity-50"
+              style="background-color: #D97D3A; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
+            >
+            </div>
+            <div
+              class="floating-shape-15 absolute top-[62%] left-[95%] w-2 h-2 rounded-full opacity-40"
+              style="background-color: #5C7B8A;"
+            >
+            </div>
+
+            <!-- Row 4 - Bottom -->
+            <div
+              class="floating-shape-16 absolute top-[75%] left-[8%] w-3 h-6 opacity-50"
+              style="background: linear-gradient(to bottom, #2C5F7A 0%, transparent 100%);"
+            >
+            </div>
+            <div
+              class="floating-shape-17 absolute top-[80%] left-[28%] w-5 h-5 opacity-45 rotate-45"
+              style="background-color: #EA5A47;"
+            >
+            </div>
+            <div
+              class="floating-shape-18 absolute top-[72%] left-[48%] w-4 h-4 rounded-full opacity-60"
+              style="background-color: #6B8898;"
+            >
+            </div>
+            <div
+              class="floating-shape-19 absolute top-[78%] left-[68%] w-3 h-3 opacity-40"
+              style="background-color: #1B4A5E; clip-path: polygon(50% 0%, 0% 100%, 100% 100%)"
+            >
+            </div>
+            <div
+              class="floating-shape-20 absolute top-[82%] left-[88%] w-6 h-2 rounded-full opacity-55"
+              style="background-color: #D97D3A;"
+            >
+            </div>
           </div>
-        </div>
+
+          <div class="text-center relative z-10 px-6">
+            <div class="name-container mb-6">
+              <h1
+                class="hero-name text-5xl sm:text-7xl lg:text-8xl font-JetbrainsMono font-black text-black tracking-tight leading-none"
+              >
+                <span class="name-part" data-letter="D">D</span><span
+                  class="name-part"
+                  data-letter="A">A</span
+                ><span class="name-part" data-letter="V">V</span><span
+                  class="name-part"
+                  data-letter="I">I</span
+                ><span class="name-part" data-letter="D">D</span>
+              </h1>
+              <h2
+                class="hero-surname text-5xl sm:text-7xl lg:text-8xl font-JetbrainsMono font-black text-black tracking-tight leading-none mt-2"
+              >
+                <span class="name-part surname" data-letter="D">D</span><span
+                  class="name-part surname"
+                  data-letter="'">&#39;</span
+                ><span class="name-part surname" data-letter="A">A</span><span
+                  class="name-part surname"
+                  data-letter="P">P</span
+                ><span class="name-part surname" data-letter="I">I</span><span
+                  class="name-part surname"
+                  data-letter="C">C</span
+                ><span class="name-part surname" data-letter="E">E</span>
+              </h2>
+            </div>
+
+            <div class="role-display">
+              <p
+                id="animated-role"
+                class="text-lg sm:text-xl lg:text-2xl font-JetbrainsMono text-orange-500 font-semibold tracking-wide"
+              >
+                Software Developer
+              </p>
+            </div>
+
+            <div class="scroll-indicator mt-12 flex flex-col items-center">
+              <div class="scroll-arrow cursor-pointer">
+                <svg
+                  class="w-6 h-6 text-gray-400 animate-bounce"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+              </div>
+              <p class="text-sm font-JetbrainsMono text-gray-400 mt-2">
+                Discover more
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hero Image Section -->
+        <section class="image-showcase relative" id="image-section">
+          <div class="image-grid">
+            <!-- Large featured image -->
+            <div class="featured-image relative overflow-hidden">
+              <Image
+                src={image}
+                alt="David D'Apice"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="image-overlay absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+              >
+              </div>
+            </div>
+
+            <!-- Content overlay -->
+            <div
+              class="image-content absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-16"
+            >
+              <div class="max-w-3xl">
+                <h3
+                  class="text-xl sm:text-3xl lg:text-5xl font-JetbrainsMono font-bold text-white mb-2 sm:mb-4"
+                >
+                  What I Do<br />
+                  Day to Day
+                </h3>
+                <p
+                  class="text-sm sm:text-lg lg:text-xl font-JetbrainsMono text-white/90 leading-relaxed"
+                >
+                  I write code, spin some tracks, and try to make things that
+                  people actually want to use.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Creative Passions Grid -->
+        <section class="passions-grid py-12 sm:py-20 lg:py-28">
+          <div class="px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-8 sm:mb-12 lg:mb-16">
+              <h2
+                class="text-4xl sm:text-5xl lg:text-6xl font-JetbrainsMono font-black text-black mb-4"
+              >
+                What I'm Into
+              </h2>
+              <div class="w-24 h-1 bg-orange-500 mx-auto mb-6"></div>
+              <p
+                class="text-lg sm:text-xl font-JetbrainsMono text-gray-600 max-w-2xl mx-auto"
+              >
+                Some stuff I do for work, some for fun. Sometimes both.
+              </p>
+            </div>
+
+            <div class="passion-cards">
+              <!-- Software Development Card -->
+              <div
+                class="passion-card dev-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">💻</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    Software Development
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I write code for web apps and try to make them not terrible to
+                  use. Still figuring it out as I go.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">React</span>
+                  <span class="tech-pill">TypeScript</span>
+                  <span class="tech-pill">Node.js</span>
+                </div>
+              </div>
+
+              <!-- Smart Home Card -->
+              <div
+                class="passion-card smart-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">🏠</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    Smart Home Stuff
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I like making my lights turn on automatically and having my
+                  house do things so I don't have to remember to.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">Home Assistant</span>
+                  <span class="tech-pill">Node-RED</span>
+                  <span class="tech-pill">IoT Sensors</span>
+                </div>
+              </div>
+
+              <!-- AI/Design Card -->
+              <div
+                class="passion-card ai-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">🤖</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    AI & Design
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I mess around with AI tools and design software. Sometimes
+                  they actually help make cool things.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">Machine Learning</span>
+                  <span class="tech-pill">Figma</span>
+                  <span class="tech-pill">Generative AI</span>
+                </div>
+              </div>
+
+              <!-- DJ/Music Card -->
+              <div
+                class="passion-card dj-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">🎧</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    DJ & Music Discovery
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I dig through way too much music looking for tracks that hit
+                  just right. Sometimes I play them for other people.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">Serato DJ</span>
+                  <span class="tech-pill">Spotify API</span>
+                  <span class="tech-pill">Pioneer DDJ</span>
+                </div>
+              </div>
+
+              <!-- Photography Card -->
+              <div
+                class="passion-card photo-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">📸</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    Photography
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I take photos when I travel or when something looks
+                  interesting. Mostly just for myself, but sometimes others like
+                  them too.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">Adobe Creative Suite</span>
+                  <span class="tech-pill">Lightroom</span>
+                  <span class="tech-pill">DSLR</span>
+                </div>
+              </div>
+
+              <!-- Music Nerd Card -->
+              <div
+                class="passion-card music-card bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 hover:border-orange-400"
+              >
+                <div class="card-header">
+                  <div class="passion-icon text-4xl mb-4">🎵</div>
+                  <h3
+                    class="text-2xl font-JetbrainsMono font-bold text-black mb-2"
+                  >
+                    Music Nerd
+                  </h3>
+                </div>
+                <p
+                  class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
+                >
+                  I spend way too much time organizing playlists and reading
+                  about music. My Spotify stats are kind of embarrassing.
+                </p>
+                <div class="passion-tech">
+                  <span class="tech-pill">Last.fm</span>
+                  <span class="tech-pill">Bandcamp</span>
+                  <span class="tech-pill">SoundCloud</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy-section bg-gray-50 py-12 sm:py-20 lg:py-28">
+          <div class="px-6 sm:px-8 lg:px-12">
+            <div class="max-w-4xl mx-auto text-center">
+              <h2
+                class="text-4xl sm:text-5xl font-JetbrainsMono font-black text-black mb-8"
+              >
+                How I Think About It
+              </h2>
+
+              <div class="philosophy-grid">
+                <div
+                  class="philosophy-quote bg-white p-8 sm:p-12 rounded-2xl shadow-lg"
+                >
+                  <blockquote
+                    class="text-xl sm:text-2xl lg:text-3xl font-JetbrainsMono text-gray-800 leading-relaxed mb-6"
+                  >
+                    "Good tech should feel like it's not even there—just helping
+                    you do what you want to do."
+                  </blockquote>
+
+                  <div class="philosophy-points space-y-6 mt-8">
+                    <div class="point flex items-start text-left">
+                      <div
+                        class="w-3 h-3 bg-orange-500 rounded-full mt-2 mr-4 flex-shrink-0"
+                      >
+                      </div>
+                      <p class="font-JetbrainsMono text-gray-700">
+                        <span class="font-bold text-black">Keep it simple:</span
+                        > If I need to explain how something works, I probably made
+                        it too complicated.
+                      </p>
+                    </div>
+                    <div class="point flex items-start text-left">
+                      <div
+                        class="w-3 h-3 bg-orange-500 rounded-full mt-2 mr-4 flex-shrink-0"
+                      >
+                      </div>
+                      <p class="font-JetbrainsMono text-gray-700">
+                        <span class="font-bold text-black">Make it useful:</span
+                        > Cool tech is nice, but useful tech actually improves someone's
+                        day.
+                      </p>
+                    </div>
+                    <div class="point flex items-start text-left">
+                      <div
+                        class="w-3 h-3 bg-orange-500 rounded-full mt-2 mr-4 flex-shrink-0"
+                      >
+                      </div>
+                      <p class="font-JetbrainsMono text-gray-700">
+                        <span class="font-bold text-black"
+                          >Always learning:</span
+                        > There's always someone who knows more than me, and that's
+                        awesome.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-finale py-12 sm:py-20 lg:py-28 bg-white">
+          <div class="px-6 sm:px-8 lg:px-12">
+            <div class="max-w-4xl mx-auto text-center">
+              <h2
+                class="text-4xl sm:text-5xl lg:text-6xl font-JetbrainsMono font-black text-black mb-8"
+              >
+                Want to Work Together?
+              </h2>
+
+              <p
+                class="text-xl sm:text-2xl font-JetbrainsMono text-gray-600 mb-12 max-w-2xl mx-auto"
+              >
+                If you need help with a project or just want to chat about
+                music, tech, or anything else, feel free to reach out.
+              </p>
+
+              <a
+                href="/contact"
+                class="cta-button inline-flex items-center bg-black hover:bg-gray-800 text-white px-12 py-6 rounded-full font-JetbrainsMono font-bold text-lg transition-all duration-300 transform hover:scale-105"
+              >
+                Get in Touch
+                <svg
+                  class="ml-4 w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
+
+      <style>
+        /* Container queries */
+        .about-container {
+          container-type: inline-size;
+          scroll-behavior: smooth;
+        }
+
+        /* Splash screen animations - smaller scale */
+        .name-part {
+          display: inline-block;
+          animation: letterDrop 0.8s ease-out forwards;
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+
+        .name-part:nth-child(1) {
+          animation-delay: 0.1s;
+        }
+        .name-part:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .name-part:nth-child(3) {
+          animation-delay: 0.3s;
+        }
+        .name-part:nth-child(4) {
+          animation-delay: 0.4s;
+        }
+        .name-part:nth-child(5) {
+          animation-delay: 0.5s;
+        }
+
+        .surname:nth-child(1) {
+          animation-delay: 0.7s;
+        }
+        .surname:nth-child(2) {
+          animation-delay: 0.8s;
+        }
+        .surname:nth-child(3) {
+          animation-delay: 0.9s;
+        }
+        .surname:nth-child(4) {
+          animation-delay: 1s;
+        }
+        .surname:nth-child(5) {
+          animation-delay: 1.1s;
+        }
+        .surname:nth-child(6) {
+          animation-delay: 1.2s;
+        }
+        .surname:nth-child(7) {
+          animation-delay: 1.3s;
+        }
+
+        @keyframes letterDrop {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Floating elements with depth effects */
+        @keyframes floatGlow {
+          0%,
+          100% {
+            transform: translateY(0) scale(1);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+          }
+          50% {
+            transform: translateY(-12px) scale(1.05);
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+          }
+        }
+
+        @keyframes floatRotate {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+          }
+          33% {
+            transform: translateY(-8px) rotate(3deg);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+          }
+          66% {
+            transform: translateY(-4px) rotate(-2deg);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+          }
+        }
+
+        @keyframes floatSway {
+          0%,
+          100% {
+            transform: translateY(0) translateX(0);
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+          }
+          25% {
+            transform: translateY(-6px) translateX(2px);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+          }
+          75% {
+            transform: translateY(-3px) translateX(-1px);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+          }
+        }
+
+        @keyframes floatPulse {
+          0%,
+          100% {
+            transform: scale(1);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) brightness(1);
+          }
+          50% {
+            transform: scale(1.1);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2)) brightness(1.2);
+          }
+        }
+
+        /* Shape animations with different patterns */
+        .floating-shape {
+          animation: floatGlow 4s ease-in-out infinite;
+        }
+        .floating-shape-2 {
+          animation: floatRotate 5s ease-in-out infinite 0.5s;
+        }
+        .floating-shape-3 {
+          animation: floatSway 6s ease-in-out infinite 1s;
+        }
+        .floating-shape-4 {
+          animation: floatPulse 3s ease-in-out infinite 1.5s;
+        }
+        .floating-shape-5 {
+          animation: floatGlow 4.5s ease-in-out infinite 2s;
+        }
+        .floating-shape-6 {
+          animation: floatRotate 5.5s ease-in-out infinite 0.8s;
+        }
+        .floating-shape-7 {
+          animation: floatSway 4s ease-in-out infinite 2.2s;
+        }
+        .floating-shape-8 {
+          animation: floatPulse 3.5s ease-in-out infinite 0.3s;
+        }
+        .floating-shape-9 {
+          animation: floatGlow 5s ease-in-out infinite 1.8s;
+        }
+        .floating-shape-10 {
+          animation: floatRotate 4.2s ease-in-out infinite 2.5s;
+        }
+        .floating-shape-11 {
+          animation: floatSway 5.8s ease-in-out infinite 0.7s;
+        }
+        .floating-shape-12 {
+          animation: floatPulse 4.8s ease-in-out infinite 1.2s;
+        }
+        .floating-shape-13 {
+          animation: floatGlow 3.8s ease-in-out infinite 2.8s;
+        }
+        .floating-shape-14 {
+          animation: floatRotate 6s ease-in-out infinite 0.4s;
+        }
+        .floating-shape-15 {
+          animation: floatSway 4.5s ease-in-out infinite 1.6s;
+        }
+        .floating-shape-16 {
+          animation: floatPulse 5.2s ease-in-out infinite 2.1s;
+        }
+        .floating-shape-17 {
+          animation: floatGlow 4.3s ease-in-out infinite 0.9s;
+        }
+        .floating-shape-18 {
+          animation: floatRotate 5.7s ease-in-out infinite 1.4s;
+        }
+        .floating-shape-19 {
+          animation: floatSway 4.6s ease-in-out infinite 0.2s;
+        }
+        .floating-shape-20 {
+          animation: floatPulse 3.2s ease-in-out infinite 1.8s;
+        }
+
+        /* Image showcase */
+        .image-showcase {
+          height: 60vh;
+          min-height: 300px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        @container (max-width: 600px) {
+          .image-showcase {
+            height: 50vh;
+            min-height: 250px;
+          }
+        }
+
+        .image-grid {
+          position: relative;
+          height: 100%;
+          width: 100%;
+        }
+
+        .featured-image {
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Passion cards grid */
+        @container (min-width: 900px) {
+          .passion-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+          }
+
+          .philosophy-grid {
+            display: flex;
+            justify-content: center;
+          }
+
+          .philosophy-quote {
+            max-width: 900px;
+          }
+        }
+
+        @container (min-width: 600px) and (max-width: 899px) {
+          .passion-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+          }
+        }
+
+        @container (max-width: 599px) {
+          .passion-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+        }
+
+        /* Passion card styling */
+        .passion-card {
+          padding: 2rem;
+          border-radius: 1rem;
+          transition: all 0.3s ease;
+          cursor: default;
+        }
+
+        .passion-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .passion-icon {
+          display: inline-block;
+          animation: iconGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes iconGlow {
+          0%,
+          100% {
+            transform: scale(1) rotate(0deg);
+            filter: brightness(1);
+          }
+          33% {
+            transform: scale(1.05) rotate(2deg);
+            filter: brightness(1.2);
+          }
+          66% {
+            transform: scale(0.98) rotate(-1deg);
+            filter: brightness(1.1);
+          }
+        }
+
+        /* Tech pills */
+        .passion-tech {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .tech-pill {
+          background: white;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          color: #374151;
+          padding: 0.25rem 0.75rem;
+          border-radius: 1rem;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
+
+        /* Role animation */
+        #animated-role {
+          transition: all 0.5s ease;
+        }
+
+        /* CTA button */
+        .cta-button {
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive typography */
+        @container (max-width: 600px) {
+          .hero-name,
+          .hero-surname {
+            font-size: 3rem;
+          }
+        }
+
+        /* Philosophy points */
+        .philosophy-points {
+          text-align: left;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+      </style>
+
+      <script>
+        let roleInterval: number | null = null; // Store interval ID for cleanup
+
+        function initializeRoleAnimation() {
+          const roleElement = document.getElementById("animated-role");
+
+          if (!roleElement) {
+            console.log("Role element not found, retrying...");
+            setTimeout(initializeRoleAnimation, 100);
+            return;
+          }
+
+          // Clear any existing interval to prevent duplicates
+          if (roleInterval) {
+            clearInterval(roleInterval);
+          }
+
+          console.log("Starting role animation...");
+
+          const roles = [
+            "Software Developer",
+            "DJ & Music Fan",
+            "Smart Home Tinkerer",
+            "Photography Hobbyist",
+            "AI Experimenter",
+            "Code Writer",
+          ];
+
+          let currentIndex = 0;
+
+          function switchRole() {
+            if (!roleElement) return;
+
+            // Scale down and fade out
+            roleElement.style.transform = "scale(0.8)";
+            roleElement.style.opacity = "0";
+
+            setTimeout(() => {
+              currentIndex = (currentIndex + 1) % roles.length;
+              roleElement.textContent = roles[currentIndex];
+
+              // Scale up and fade in
+              roleElement.style.transform = "scale(1)";
+              roleElement.style.opacity = "1";
+            }, 300);
+          }
+
+          // Initial setup
+          roleElement.style.transition = "all 0.5s ease";
+
+          // Start the animation after 2 seconds, then continue every 3 seconds
+          setTimeout(() => {
+            switchRole();
+            roleInterval = setInterval(switchRole, 3000);
+          }, 2000);
+        }
+
+        function initializePageInteractions() {
+          // Initialize role animation
+          initializeRoleAnimation();
+
+          // Scroll indicator click
+          const scrollIndicator = document.querySelector(".scroll-indicator");
+          if (scrollIndicator) {
+            scrollIndicator.addEventListener("click", () => {
+              const imageSection = document.getElementById("image-section");
+              if (imageSection) {
+                imageSection.scrollIntoView({ behavior: "smooth" });
+              }
+            });
+          }
+
+          // Stagger animation for passion cards
+          const passionCards = document.querySelectorAll(".passion-card");
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                  setTimeout(() => {
+                    const target = entry.target as HTMLElement;
+                    target.style.opacity = "1";
+                    target.style.transform = "translateY(0)";
+                  }, index * 100);
+                }
+              });
+            },
+            { threshold: 0.1 }
+          );
+
+          passionCards.forEach((card, index) => {
+            const cardElement = card as HTMLElement;
+            cardElement.style.opacity = "0";
+            cardElement.style.transform = "translateY(30px)";
+            cardElement.style.transition = "all 0.6s ease";
+            observer.observe(card);
+          });
+        }
+
+        // Handle both page load and client-side navigation
+        document.addEventListener(
+          "DOMContentLoaded",
+          initializePageInteractions
+        );
+        document.addEventListener(
+          "astro:page-load",
+          initializePageInteractions
+        );
+      </script>
     </BrowserWindow>
   </div>
 </Layout>

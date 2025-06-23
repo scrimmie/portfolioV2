@@ -1,0 +1,334 @@
+---
+// src/components/RetroTerminal.astro
+const { title = "TERMINAL" } = Astro.props;
+---
+
+<div class="retro-monitor">
+  <div class="monitor-frame">
+    <div class="monitor-bezel">
+      <div class="monitor-screen">
+        <div class="crt-overlay"></div>
+        <div class="scanlines"></div>
+
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+          <div class="terminal-controls">
+            <div class="led power-led"></div>
+            <div class="led status-led"></div>
+          </div>
+          <div class="terminal-title">
+            <span class="blinking-cursor">█</span>
+            {title}
+          </div>
+          <div class="terminal-info">
+            <span class="terminal-time" id="terminal-time"></span>
+          </div>
+        </div>
+
+        <!-- Terminal Content -->
+        <div class="terminal-content">
+          <slot />
+        </div>
+
+        <!-- Terminal Footer -->
+        <div class="terminal-footer">
+          <div class="status-bar">
+            <span class="status-text">READY</span>
+            <span class="connection-status">● ONLINE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .retro-monitor {
+    container-type: inline-size;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 70%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 0, 0.03) 2px,
+        rgba(0, 255, 0, 0.03) 4px
+      );
+    padding: 2rem;
+  }
+
+  .monitor-frame {
+    background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow:
+      0 0 50px rgba(0, 0, 0, 0.8),
+      inset 0 2px 10px rgba(255, 255, 255, 0.1),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .monitor-bezel {
+    background: #000;
+    border-radius: 15px;
+    padding: 1rem;
+    position: relative;
+    height: 100%;
+    box-shadow:
+      inset 0 0 20px rgba(0, 0, 0, 0.9),
+      inset 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .monitor-screen {
+    background: #000a00;
+    border-radius: 10px;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 30px rgba(0, 255, 0, 0.2);
+  }
+
+  .crt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.3) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.02) 50%,
+        rgba(0, 100, 0, 0.02) 51%
+      );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 0, 0.05) 2px,
+      rgba(0, 255, 0, 0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 5;
+    animation: flicker 0.15s infinite linear alternate;
+  }
+
+  .terminal-header {
+    background: linear-gradient(90deg, #003300, #004400);
+    border-bottom: 2px solid #00ff00;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+  }
+
+  .terminal-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .power-led {
+    background: #00ff00;
+    animation: pulse 2s infinite;
+  }
+
+  .status-led {
+    background: #ffff00;
+    animation: pulse 3s infinite;
+  }
+
+  .terminal-title {
+    color: #00ff00;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px #00ff00;
+  }
+
+  .terminal-info {
+    color: #00aa00;
+    font-size: 0.8rem;
+  }
+
+  .terminal-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .terminal-footer {
+    background: linear-gradient(90deg, #001100, #002200);
+    border-top: 1px solid #004400;
+    padding: 0.5rem 1rem;
+    position: relative;
+    z-index: 20;
+  }
+
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+  }
+
+  .status-text {
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+  }
+
+  .connection-status {
+    color: #00aa00;
+  }
+
+  .blinking-cursor {
+    animation: blink 1s infinite;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes flicker {
+    0% {
+      opacity: 1;
+    }
+    97% {
+      opacity: 1;
+    }
+    98% {
+      opacity: 0.98;
+    }
+    99% {
+      opacity: 0.99;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Responsive adjustments */
+  @container (max-width: 768px) {
+    .retro-monitor {
+      padding: 1rem;
+    }
+
+    .monitor-frame {
+      padding: 1rem;
+    }
+
+    .monitor-bezel {
+      padding: 0.5rem;
+    }
+
+    .terminal-header {
+      padding: 0.5rem;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .terminal-title {
+      font-size: 0.8rem;
+    }
+
+    .terminal-info {
+      font-size: 0.7rem;
+    }
+  }
+
+  @container (max-width: 480px) {
+    .retro-monitor {
+      padding: 0.5rem;
+    }
+
+    .terminal-controls {
+      gap: 0.25rem;
+    }
+
+    .led {
+      width: 6px;
+      height: 6px;
+    }
+
+    .terminal-title {
+      font-size: 0.7rem;
+    }
+  }
+</style>
+
+<script>
+  function updateTime() {
+    const timeElement = document.getElementById("terminal-time");
+    if (timeElement) {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+      timeElement.textContent = timeString;
+    }
+  }
+
+  // Update time every second
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
+

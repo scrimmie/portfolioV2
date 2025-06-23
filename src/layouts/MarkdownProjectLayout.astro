@@ -1,5 +1,6 @@
 ---
 import BrowserWindow from "../components/BrowserWindow.astro";
+import RetroTerminal from "../components/RetroTerminal.astro";
 import Layout from "./Layout.astro";
 import { SlickSlider } from "../components/SlickSlider";
 const { frontmatter } = Astro.props;
@@ -7,160 +8,463 @@ const { frontmatter } = Astro.props;
 
 <Layout title={frontmatter.title}>
   <div class="flex w-full h-full items-left justify-center flex-col">
-    <BrowserWindow url={"projects/" + frontmatter.title + ".com"}>
-      <div
-        class="overflow-scroll w-full h-max px-4 py-8 bg-black bg-opacity-50 bg-clip-padding backdrop-blur-md backdrop-filter flex justify-center items-center flex-col"
-      >
-        <h1 class="text-9xl mb-2 font-JetbrainsMono text-white">
-          {frontmatter.title}
-        </h1>
-        <p class="text-white font-JetbrainsMono text-1xl mb-3">
-          {frontmatter.projectDate.toString().slice(0, 15)}
-        </p>
+    <BrowserWindow url={`projects/${frontmatter.title}.terminal`}>
+      <RetroTerminal title={`PROJECT: ${frontmatter.title.toUpperCase()}`}>
+        <div
+          class="project-container overflow-scroll w-full h-max flex justify-center items-center flex-col"
+        >
+          <!-- Terminal Output Header -->
+          <div class="terminal-output">
+            <div class="command-line">
+              <span class="prompt">user@system:~$</span>
+              <span class="command">cat project_info.txt</span>
+            </div>
 
-        <p class="text-gray-300 font-JetbrainsMono">
-          {frontmatter.description}
-        </p>
-        {
-          frontmatter.projectLink && (
-            <a
-              href={frontmatter.projectLink}
-              target="_blank"
-              class="my-4 text-blue-500 font-JetbrainsMono text-2xl hover:underline"
-            >
-              {frontmatter.title + " " + "Link"}
-            </a>
-          )
-        }
-        <div class="mb-8 block w-1/2 mt-8">
-          <SlickSlider
-            images={frontmatter.images.map((item: any) => {
-              return item.src;
-            })}
-            client:only="react"
-          />
+            <div class="output-block">
+              <div class="ascii-header">
+                <pre class="ascii-art">{frontmatter.title.toUpperCase()}</pre>
+              </div>
+
+              <div class="project-details">
+                <div class="detail-line">
+                  <span class="label">DATE:</span>
+                  <span class="value"
+                    >{frontmatter.projectDate.toString().slice(0, 15)}</span
+                  >
+                </div>
+                <div class="detail-line">
+                  <span class="label">DESC:</span>
+                  <span class="value">{frontmatter.description}</span>
+                </div>
+                {
+                  frontmatter.projectLink && (
+                    <div class="detail-line">
+                      <span class="label">LINK:</span>
+                      <a
+                        href={frontmatter.projectLink}
+                        target="_blank"
+                        class="project-url"
+                      >
+                        {frontmatter.projectLink}
+                      </a>
+                    </div>
+                  )
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Command -->
+          <div class="command-line">
+            <span class="prompt">user@system:~$</span>
+            <span class="command">display screenshots/</span>
+          </div>
+
+          <div class="gallery-section">
+            <SlickSlider
+              images={frontmatter.images.map((item: any) => {
+                return item.src;
+              })}
+              client:only="react"
+            />
+          </div>
+
+          <!-- Documentation Command -->
+          <div class="command-line">
+            <span class="prompt">user@system:~$</span>
+            <span class="command">cat documentation.md</span>
+          </div>
+
+          <article class="content-article">
+            <slot />
+          </article>
         </div>
-        <hr class="w-full border-t-2 mb-6 mt-6" />
-        <article class="w-1/2">
-          <slot />
-        </article>
-      </div>
+      </RetroTerminal>
     </BrowserWindow>
   </div>
+
+  <style is:global>
+    /* Container queries */
+    .project-container {
+      container-type: inline-size;
+      padding: 1rem;
+      font-family: "JetBrains Mono", monospace;
+      color: #00ff00;
+      line-height: 1.4;
+    }
+
+    /* Terminal Command Lines */
+    .command-line {
+      margin: 1.5rem 0 0.5rem 0;
+      font-family: "JetBrains Mono", monospace;
+      text-align: left;
+      width: 100%;
+    }
+
+    .prompt {
+      color: #00aa00;
+      text-shadow: 0 0 5px #00aa00;
+    }
+
+    .command {
+      color: #00ff00;
+      text-shadow: 0 0 5px #00ff00;
+      margin-left: 0.5rem;
+    }
+
+    /* Terminal Output Blocks */
+    .terminal-output {
+      margin: 2rem 0;
+      width: 100%;
+      text-align: left;
+    }
+
+    .output-block {
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #004400;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .ascii-header {
+      border-bottom: 1px solid #004400;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .ascii-art {
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 0;
+      letter-spacing: 0.1em;
+    }
+
+    .project-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .detail-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .label {
+      color: #00aa00;
+      font-weight: bold;
+      min-width: 60px;
+    }
+
+    .value {
+      color: #00ff00;
+    }
+
+    .project-url {
+      color: #00ccff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .project-url:hover {
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ccff;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 1rem auto 2rem auto;
+      border: 1px solid #004400;
+      border-radius: 4px;
+      padding: 1rem;
+      background: rgba(0, 255, 0, 0.02);
+    }
+
+    /* Responsive gallery width limits */
+    @container (max-width: 1400px) {
+      .gallery-section {
+        max-width: 1000px;
+      }
+    }
+
+    @container (max-width: 1200px) {
+      .gallery-section {
+        max-width: 800px;
+      }
+    }
+
+    @container (max-width: 900px) {
+      .gallery-section {
+        max-width: 600px;
+      }
+    }
+
+    /* Content Article */
+    .content-article {
+      width: 100%;
+      margin: 1rem 0;
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #004400;
+      border-radius: 4px;
+      padding: 1rem;
+      text-align: left;
+    }
+
+    /* Container Query Responsive Design */
+    @container (max-width: 768px) {
+      .project-container {
+        padding: 0.75rem;
+      }
+
+      .ascii-art {
+        font-size: 1.2rem;
+      }
+
+      .command-line {
+        font-size: 0.9rem;
+      }
+
+      .detail-line {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+
+    @container (max-width: 480px) {
+      .project-container {
+        padding: 0.5rem;
+      }
+
+      .ascii-art {
+        font-size: 1rem;
+      }
+
+      .command-line,
+      .prompt,
+      .command {
+        font-size: 0.8rem;
+      }
+
+      .output-block {
+        padding: 0.75rem;
+      }
+    }
+
+    /* Article Typography - Retro Terminal Style */
+    article {
+      font-family: "JetBrains Mono", monospace;
+      line-height: 1.6;
+      color: #00ff00;
+    }
+
+    /* Headers with terminal styling */
+    article h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+      text-transform: uppercase;
+      border-bottom: 2px solid #004400;
+      padding-bottom: 0.5rem;
+    }
+
+    article h2 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+      color: #00aa00;
+      text-shadow: 0 0 5px #00aa00;
+      text-transform: uppercase;
+    }
+
+    article h3 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #00ff00;
+    }
+
+    article h4,
+    article h5,
+    article h6 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #00aa00;
+    }
+
+    /* Content styling */
+    article p {
+      margin-bottom: 1rem;
+      color: #00cc00;
+      font-size: 0.9rem;
+    }
+
+    article a {
+      color: #00ccff;
+      text-decoration: underline;
+      transition: all 0.2s;
+    }
+
+    article a:hover {
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ccff;
+    }
+
+    article strong {
+      font-weight: bold;
+      color: #00ff00;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    article em {
+      font-style: italic;
+      color: #00aa00;
+    }
+
+    /* Lists */
+    article ul,
+    article ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    article li {
+      margin-bottom: 0.25rem;
+      color: #00cc00;
+    }
+
+    article ul li::marker {
+      color: #00aa00;
+    }
+
+    article ol li::marker {
+      color: #00aa00;
+    }
+
+    /* Code blocks */
+    article pre {
+      background: rgba(0, 50, 0, 0.3);
+      border: 1px solid #004400;
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+
+    article code {
+      background: rgba(0, 50, 0, 0.2);
+      border: 1px solid #004400;
+      border-radius: 2px;
+      padding: 0.125rem 0.375rem;
+      font-size: 0.85rem;
+      color: #00ffaa;
+    }
+
+    article pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #00ff00;
+    }
+
+    /* Blockquotes */
+    article blockquote {
+      border-left: 4px solid #004400;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #00aa00;
+      background: rgba(0, 255, 0, 0.05);
+      border-radius: 4px;
+    }
+
+    /* Tables */
+    article table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #004400;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    article th {
+      background: rgba(0, 50, 0, 0.3);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: bold;
+      color: #00ff00;
+      border-bottom: 1px solid #004400;
+    }
+
+    article td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #004400;
+      color: #00cc00;
+    }
+
+    /* Images */
+    article img {
+      width: 100%;
+      border: 2px solid #004400;
+      border-radius: 4px;
+      margin: 1rem 0;
+      filter: hue-rotate(90deg) saturate(1.2);
+    }
+
+    /* Responsive typography adjustments */
+    @container (max-width: 768px) {
+      article h1 {
+        font-size: 1.25rem;
+      }
+
+      article h2 {
+        font-size: 1.1rem;
+      }
+
+      article h3 {
+        font-size: 1rem;
+      }
+
+      article p {
+        font-size: 0.85rem;
+      }
+
+      article code {
+        font-size: 0.8rem;
+      }
+    }
+
+    @container (max-width: 480px) {
+      article h1 {
+        font-size: 1.1rem;
+      }
+
+      article h2 {
+        font-size: 1rem;
+      }
+
+      article h3 {
+        font-size: 0.95rem;
+      }
+
+      article p {
+        font-size: 0.8rem;
+      }
+
+      article code {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
 </Layout>
-
-<style is:global>
-  /* Headers */
-  article h1 {
-    @apply text-4xl font-bold mb-8 text-white;
-  }
-
-  article h2 {
-    @apply text-3xl font-bold mb-8 text-white;
-  }
-
-  article h3 {
-    @apply text-2xl font-bold mb-6 text-white;
-  }
-
-  article h4 {
-    @apply text-xl font-bold mb-4 text-white;
-  }
-
-  article h5 {
-    @apply text-lg font-bold mb-4 text-white;
-  }
-
-  article h6 {
-    @apply text-base font-bold mb-4 text-white;
-  }
-
-  /* Horizontal rules */
-  article hr {
-    @apply text-white my-8;
-  }
-
-  article a {
-    @apply text-blue-500 leading-relaxed hover:underline;
-  }
-
-  /* Typographic replacements */
-  article p {
-    @apply mb-8 leading-relaxed text-white;
-  }
-
-  /* Emphasis */
-  article strong {
-    @apply font-bold text-xl leading-relaxed;
-  }
-
-  article em {
-    @apply italic text-xl leading-relaxed;
-  }
-
-  article del {
-    @apply line-through text-xl leading-relaxed;
-  }
-
-  /* Blockquotes */
-  article blockquote {
-    @apply border-l-4 border-gray-400 pl-4 py-2 mb-4;
-  }
-
-  /* Lists */
-  article ul {
-    @apply list-disc pl-4 mb-4 text-white;
-  }
-
-  article ol {
-    @apply list-decimal pl-4 mb-4 text-white;
-  }
-
-  article li {
-    @apply mb-2 text-white;
-  }
-
-  article li > ul {
-    @apply list-disc pl-4 mb-2;
-  }
-
-  article li > ol {
-    @apply list-decimal pl-4 mb-2;
-  }
-
-  /* Code blocks */
-  article pre {
-    @apply font-mono text-white  rounded p-4  my-6;
-  }
-
-  article code {
-    @apply font-mono text-white rounded px-2 py-1;
-  }
-
-  /* Tables */
-  article table {
-    @apply w-full border-collapse text-white my-6;
-  }
-
-  article th {
-    @apply text-left py-2 px-4 font-semibold border-b text-white;
-  }
-
-  article td {
-    @apply py-2 px-4 border-b;
-  }
-
-  /* Images */
-  article img {
-    @apply w-full object-cover rounded-xl my-6;
-  }
-
-  article {
-    @apply font-JetbrainsMono;
-  }
-
-  /* Custom containers */
-  article .warning {
-    @apply bg-yellow-100 border-yellow-500 text-yellow-700 px-4 py-2 rounded-lg mb-4;
-  }
-</style>
