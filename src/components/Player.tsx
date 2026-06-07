@@ -124,7 +124,9 @@ export default function Player() {
     try {
       // Public, read-only endpoint, no credentials needed (a static client
       // can't hold a secret, and the worker is gated by a CORS origin allowlist).
-      const r = await fetch(CURRENT_TRACK_URL);
+      // no-store so the browser never serves a stale (e.g. paused) response —
+      // the worker's short edge cache still throttles upstream Spotify calls.
+      const r = await fetch(CURRENT_TRACK_URL, { cache: "no-store" });
       if (!r.ok || !isActiveRef.current) return;
 
       const body = (await r.json()) as SpotifyResponse;
