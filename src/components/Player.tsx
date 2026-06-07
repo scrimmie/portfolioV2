@@ -109,8 +109,9 @@ interface Track {
 export default function Player() {
   const [track, setTrack] = useState<Track>();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [trackProgress, setTrackProgress] = useState<number>();
-  const [duration, setDuration] = useState<number>();
+  // Current playback position in ms, advanced locally between polls.
+  const [progressMs, setProgressMs] = useState(0);
+  const endHandledRef = useRef(false);
 
   const isActiveRef = useRef(true);
   useEffect(() => {
@@ -135,12 +136,12 @@ export default function Player() {
         body.currentTrackProgress != null
       ) {
         setTrack(body.currentTrack);
-        setTrackProgress(Math.round(body.currentTrackProgress / 1000));
+        setProgressMs(body.currentTrackProgress);
         setIsPlaying(true);
       } else {
         setIsPlaying(false);
         setTrack(undefined);
-        setTrackProgress(undefined);
+        setProgressMs(0);
       }
     } catch {
       // Network/parse error — keep the last known state and retry next tick.
@@ -155,15 +156,39 @@ export default function Player() {
     return () => clearInterval(id);
   }, [fetchCurrentTrack]);
 
+  // Advance the local position once a second while playing so the bar reflects
+  // real elapsed time; each poll resyncs it to Spotify's actual progress.
   useEffect(() => {
-    if (track && trackProgress != null) {
-      const totalSeconds = Math.round(track.duration_ms / 1000);
-      const remaining = totalSeconds - trackProgress;
-      setDuration(remaining > 0 ? remaining : undefined);
-    } else {
-      setDuration(undefined);
+    if (!isPlaying || !track) return;
+    const id = window.setInterval(() => {
+      setProgressMs((p) => Math.min(p + 1000, track.duration_ms));
+    }, 1000);
+    return () => clearInterval(id);
+  }, [isPlaying, track]);
+
+  // Reset the end-of-track guard whenever a new track loads.
+  useEffect(() => {
+    endHandledRef.current = false;
+  }, [track?.id]);
+
+  // When the track reaches its end, refetch once to pick up the next one.
+  useEffect(() => {
+    if (
+      track &&
+      track.duration_ms > 0 &&
+      progressMs >= track.duration_ms &&
+      !endHandledRef.current
+    ) {
+      endHandledRef.current = true;
+      fetchCurrentTrack();
     }
-  }, [track, trackProgress]);
+  }, [progressMs, track, fetchCurrentTrack]);
+
+  // Bar fill percentage, derived straight from the real position.
+  const pct =
+    track && track.duration_ms > 0
+      ? Math.min(100, Math.max(0, (progressMs / track.duration_ms) * 100))
+      : 0;
 
   return (
     <motion.div
@@ -197,7 +222,7 @@ export default function Player() {
 
       <div className="relative z-10 w-full h-full p-6">
         <AnimatePresence mode="wait">
-          {isPlaying && track && duration != null && trackProgress != null ? (
+          {isPlaying && track ? (
             <motion.div
               key="playing"
               initial={{ opacity: 0, y: 20 }}
@@ -330,31 +355,13 @@ export default function Player() {
                 transition={{ delay: 0.8 }}
               >
                 <div className="relative h-1 bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div
+                  <div
                     key={track.id}
-                    initial={{
-                      width: `${Math.min(
-                        100,
-                        Math.max(
-                          0,
-                          Math.round(
-                            (trackProgress /
-                              Math.max(1, Math.round(track.duration_ms / 1000))) *
-                              100
-                          )
-                        )
-                      )}%`,
-                    }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: duration, ease: "linear" }}
-                    className="h-full bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full relative"
-                    onAnimationComplete={() => {
-                      // Track finished — refresh immediately to pick up the next one.
-                      fetchCurrentTrack();
-                    }}
+                    className="h-full bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full relative transition-[width] duration-1000 ease-linear"
+                    style={{ width: `${pct}%` }}
                   >
                     <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
-                  </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
