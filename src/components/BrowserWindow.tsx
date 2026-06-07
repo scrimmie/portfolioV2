@@ -83,7 +83,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
       const mobile = isMobileViewport();
       setIsMobile(mobile);
       // Re-fit while on mobile (rotation/chrome) and once when crossing the
-      // breakpoint either way — but leave a user-positioned desktop window be.
+      // breakpoint either way, but leave a user-positioned desktop window be.
       if (mobile || wasMobile) {
         setWindowState((prev) =>
           prev.isMinimized
@@ -102,12 +102,12 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
   const headerRef = useRef<HTMLDivElement>(null);
   const minimizedRef = useRef<HTMLButtonElement>(null);
 
-  // Drag state — transient values live in a ref so the move handler can stay
+  // Drag state, transient values live in a ref so the move handler can stay
   // stable and be attached only for the duration of a drag.
   const [isDragging, setIsDragging] = useState(false);
   const dragRef = useRef({ offsetX: 0, offsetY: 0, width: 0, height: 0 });
 
-  // Resize state — captured once at resize start and never mutated mid-gesture,
+  // Resize state, captured once at resize start and never mutated mid-gesture,
   // so the anchored edge stays pinned.
   const [isResizing, setIsResizing] = useState(false);
   const resizeRef = useRef<{
@@ -178,7 +178,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
     setIsResizing(true);
   };
 
-  // Global drag/resize handlers — attached only while a gesture is active.
+  // Global drag/resize handlers, attached only while a gesture is active.
   useEffect(() => {
     if (!isDragging && !isResizing) return;
 
@@ -538,7 +538,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
             </button>
           </div>
 
-          {/* URL — absolutely centered so the controls don't push it off-center */}
+          {/* URL, absolutely centered so the controls don't push it off-center */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-1.5 px-24 font-JetbrainsMono text-white/70">
             <svg
               className="h-3 w-3 flex-shrink-0 opacity-50"
@@ -565,7 +565,7 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
 
       </div>
 
-      {/* Resize handles — outside the clipped chrome so the corners stay grabbable */}
+      {/* Resize handles, outside the clipped chrome so the corners stay grabbable */}
       {!windowState.isMaximized && !isMobile && (
         <>
           <div

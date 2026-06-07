@@ -16,12 +16,12 @@ interface Props {
 const SITE_NAME = "David D'Apice";
 const {
   title,
-  description = "David D'Apice — Full-Stack Developer, Photographer & Creative.",
+  description = "David D'Apice - Full-Stack Developer, Photographer & Creative.",
 } = Astro.props;
 // Give every page a unique, descriptive <title> without double-printing the name.
 const pageTitle = title.includes(SITE_NAME)
   ? title
-  : `${title} — ${SITE_NAME}`;
+  : `${title} | ${SITE_NAME}`;
 ---
 
 <!doctype html>
