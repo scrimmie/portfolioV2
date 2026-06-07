@@ -47,8 +47,8 @@ const computeWindowBox = () => {
       height: availHeight,
     };
   }
-  const width = Math.min(800, window.innerWidth * 0.8);
-  const height = Math.min(600, availHeight * 0.9);
+  const width = Math.min(900, window.innerWidth * 0.8);
+  const height = Math.min(700, availHeight * 0.9);
   return {
     x: (window.innerWidth - width) / 2,
     y: TOP_BAR_HEIGHT + (availHeight - height) / 2,
@@ -373,8 +373,8 @@ export const BrowserWindow: React.FC<BrowserWindowProps> = ({
         isMaximized: false,
         x: prev.prevState?.x ?? 0,
         y: prev.prevState?.y ?? TOP_BAR_HEIGHT,
-        width: prev.prevState?.width ?? 800,
-        height: prev.prevState?.height ?? 600,
+        width: prev.prevState?.width ?? 900,
+        height: prev.prevState?.height ?? 700,
       };
     });
   };
