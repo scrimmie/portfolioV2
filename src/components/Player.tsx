@@ -111,7 +111,6 @@ export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
   // Current playback position in ms, advanced locally between polls.
   const [progressMs, setProgressMs] = useState(0);
-  const endHandledRef = useRef(false);
 
   const isActiveRef = useRef(true);
   useEffect(() => {
@@ -168,23 +167,18 @@ export default function Player() {
     return () => clearInterval(id);
   }, [isPlaying, track]);
 
-  // Reset the end-of-track guard whenever a new track loads.
+  // Once the local position reaches the end of the track, keep polling until
+  // Spotify actually advances to the next song. A single refetch isn't enough:
+  // the ticker can reach the end a beat before Spotify flips over, so we'd just
+  // get the same track back. Poll every 2s until the track id changes.
+  const atEnd =
+    !!track && track.duration_ms > 0 && progressMs >= track.duration_ms;
   useEffect(() => {
-    endHandledRef.current = false;
-  }, [track?.id]);
-
-  // When the track reaches its end, refetch once to pick up the next one.
-  useEffect(() => {
-    if (
-      track &&
-      track.duration_ms > 0 &&
-      progressMs >= track.duration_ms &&
-      !endHandledRef.current
-    ) {
-      endHandledRef.current = true;
-      fetchCurrentTrack();
-    }
-  }, [progressMs, track, fetchCurrentTrack]);
+    if (!atEnd) return;
+    fetchCurrentTrack();
+    const id = window.setInterval(fetchCurrentTrack, 2000);
+    return () => clearInterval(id);
+  }, [atEnd, track?.id, fetchCurrentTrack]);
 
   // Bar fill percentage, derived straight from the real position.
   const pct =
