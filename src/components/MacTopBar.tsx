@@ -55,12 +55,12 @@ export const MacTopBar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-gray-800/95 backdrop-blur-sm border-b border-gray-700 h-6 flex items-center justify-between px-3 text-xs text-white font-JetbrainsMono">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-zinc-900/60 backdrop-blur-xl border-b border-white/10 h-6 flex items-center justify-between px-3 text-xs text-white font-JetbrainsMono">
       {/* Left side - Computer menu */}
       <div className="relative" ref={menuRef}>
         <button
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center space-x-1 hover:bg-gray-700/50 px-2 py-1 rounded transition-colors"
+          className="flex items-center space-x-1 hover:bg-white/10 px-2 py-1 rounded transition-colors"
           aria-label="Open navigation menu"
           aria-haspopup="menu"
           aria-expanded={showDropdown}
@@ -72,20 +72,20 @@ export const MacTopBar = () => {
         {showDropdown && (
           <div
             role="menu"
-            className="absolute top-full left-0 mt-1 bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-md shadow-lg min-w-48 py-1"
+            className="absolute top-full left-0 mt-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 ring-1 ring-inset ring-white/10 rounded-lg shadow-xl min-w-48 py-1"
           >
             {ROUTES.map((item) => (
               <a
                 key={item.page}
                 href={item.href}
                 role="menuitem"
-                className="block px-3 py-1 hover:bg-gray-700/50 transition-colors"
+                className="block px-3 py-1 hover:bg-white/10 transition-colors"
                 onClick={() => setShowDropdown(false)}
               >
                 {item.name}
               </a>
             ))}
-            <div className="border-t border-gray-700 my-1"></div>
+            <div className="border-t border-white/10 my-1"></div>
             <div className="px-3 py-1 text-gray-400">Technology is cool!</div>
           </div>
         )}

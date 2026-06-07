@@ -8,9 +8,11 @@ import Layout from "../layouts/Layout.astro";
   description="Get in touch with David D'Apice — collaborations, projects, and conversations welcome."
 >
   <BrowserWindow url="mail.dapice.dev/inbox">
-    <div class="flex h-full bg-gray-50">
+    <div class="flex flex-col md:flex-row h-full bg-gray-50">
       <!-- Sidebar -->
-      <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+      <div
+        class="w-full md:w-64 flex-shrink-0 bg-white border-b md:border-b-0 md:border-r border-gray-200 flex flex-col"
+      >
         <!-- Profile Section -->
         <div class="p-4 border-b border-gray-200">
           <div class="flex items-center space-x-3">
@@ -27,7 +29,7 @@ import Layout from "../layouts/Layout.astro";
         </div>
 
         <!-- Navigation -->
-        <div class="flex-1 p-2">
+        <div class="hidden md:block flex-1 p-2">
           <nav class="space-y-1">
             <div
               class="bg-blue-50 text-blue-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md"
@@ -277,19 +279,24 @@ import Layout from "../layouts/Layout.astro";
         <div class="flex-1 bg-white px-6 py-6 overflow-auto">
           <div class="max-w-3xl">
             <div class="prose prose-gray max-w-none">
-              <p class="text-gray-700 mb-4">Hey there! 👋</p>
+              <p class="text-gray-700 mb-4">
+                Hey — thanks for clicking through. 👋
+              </p>
 
               <p class="text-gray-700 mb-4">
-                I hope this email finds you well! I wanted to reach out because
-                I'm always excited to connect with fellow creators, developers,
-                and innovators who are passionate about building amazing things.
+                If you found this from my resume: hi, I'm the person behind the
+                bullet points. I'm a tech lead who likes building things that
+                hold up, and helping the people around me get better at building
+                them too. Lately I'm especially deep into AI-augmented
+                engineering — building the agent tooling and harnesses, not just
+                using them.
               </p>
 
               <p class="text-gray-700 mb-6">
-                Whether you're interested in collaborating on a project,
-                discussing new ideas, sharing photography tips, or just having a
-                good conversation about technology and creativity, I'd love to
-                hear from you.
+                I'm always happy to talk to a team working on something
+                interesting — especially if you care about doing the work well
+                and actually enjoying it. And if you just want to swap music recs
+                or ask about the DJ thing, that works too.
               </p>
 
               <!-- Contact Info Box -->
@@ -367,22 +374,30 @@ import Layout from "../layouts/Layout.astro";
               </p>
 
               <ul class="text-gray-700 mb-6 list-disc list-inside space-y-1">
-                <li>Full-stack development and modern web technologies</li>
-                <li>Photography and visual storytelling</li>
-                <li>Creative projects that blend technology and art</li>
-                <li>Building meaningful connections in the tech community</li>
+                <li>
+                  Starting big projects from scratch — greenfield builds where
+                  you set the foundation
+                </li>
+                <li>
+                  AI-augmented engineering — building the agent tooling and
+                  harnesses, not just using them
+                </li>
+                <li>
+                  Mentorship and the people side of engineering — keeping teams
+                  fun, motivated, and shipping
+                </li>
+                <li>Music, photography, and over-engineering my apartment</li>
               </ul>
 
               <p class="text-gray-700 mb-6">
-                Don't hesitate to reach out - I'd love to learn about what
-                you're working on and explore how we might collaborate or simply
-                share ideas!
+                Easiest way to reach me is right here — I read everything, and I
+                actually reply.
               </p>
 
               <p class="text-gray-700 mb-2">Looking forward to connecting,</p>
               <p class="text-gray-900 font-medium">David D'Apice</p>
               <p class="text-sm text-gray-500">
-                Full-Stack Developer & Creative
+                Tech Lead & Software Engineer
               </p>
             </div>
           </div>

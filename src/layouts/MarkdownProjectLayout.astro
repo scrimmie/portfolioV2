@@ -176,12 +176,15 @@ const { frontmatter } = Astro.props;
     .value {
       color: #00ff00;
       margin: 0;
+      overflow-wrap: anywhere;
     }
 
     .project-url {
       color: #00ccff;
       text-decoration: underline;
       cursor: pointer;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .project-url:hover {

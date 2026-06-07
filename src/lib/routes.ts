@@ -21,5 +21,9 @@ export const ROUTES: AppRoute[] = [
 ];
 
 /** Resolve a pathname to its `data-page` key, defaulting to "home". */
-export const pageForPath = (path: string): string =>
-  ROUTES.find((route) => route.href === path)?.page ?? "home";
+export const pageForPath = (path: string): string => {
+  // Normalize a trailing slash (e.g. "/aboutMe/" → "/aboutMe") so docking and
+  // the active indicator work regardless of the host's trailing-slash style.
+  const normalized = path.length > 1 ? path.replace(/\/+$/, "") : path;
+  return ROUTES.find((route) => route.href === normalized)?.page ?? "home";
+};

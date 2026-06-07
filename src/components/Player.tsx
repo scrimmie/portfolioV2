@@ -121,11 +121,9 @@ export default function Player() {
 
   const fetchCurrentTrack = useCallback(async () => {
     try {
-      const r = await fetch(CURRENT_TRACK_URL, {
-        headers: {
-          Authorization: `Basic dGVzdFNwb3RpZnk6UG9ydGZvbGlvU2l0ZQ==`,
-        },
-      });
+      // Public, read-only endpoint — no credentials needed (a static client
+      // can't hold a secret; the worker is gated by a CORS origin allowlist).
+      const r = await fetch(CURRENT_TRACK_URL);
       if (!r.ok || !isActiveRef.current) return;
 
       const body = (await r.json()) as SpotifyResponse;
@@ -239,7 +237,7 @@ export default function Player() {
               </motion.div>
 
               {/* Main Content - Album Art and Info Side by Side */}
-              <div className="flex-1 flex items-center space-x-6">
+              <div className="flex-1 flex items-center space-x-3 sm:space-x-6">
                 {/* Album Art */}
                 <motion.div
                   className="relative flex-shrink-0"
@@ -264,7 +262,7 @@ export default function Player() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <img
-                      className="relative w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl border-2 border-cyan-400/50 hover:border-cyan-400 transition-all duration-300 shadow-lg"
+                      className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 object-cover rounded-xl border-2 border-cyan-400/50 hover:border-cyan-400 transition-all duration-300 shadow-lg"
                       src={safeHttpsUrl(track.album.images?.[0]?.url)}
                       alt={track.album.name}
                     />

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import image from "../assets/backgrounds/davidDapice.jpg";
 import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
+import { RoleCycler } from "../components/RoleCycler";
 ---
 
 <Layout
@@ -14,7 +15,7 @@ import Layout from "../layouts/Layout.astro";
       <div class="w-full h-full overflow-y-auto bg-white about-container">
         <!-- Shorter Splash Screen Hero -->
         <section
-          class="splash-hero min-h-[75vh] flex items-center justify-center relative overflow-hidden"
+          class="splash-hero min-h-full flex items-center justify-center relative overflow-hidden"
         >
           <!-- Animated background elements -->
           <div class="floating-elements absolute inset-0 pointer-events-none">
@@ -157,18 +158,16 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
             <div class="role-display">
-              <p
-                id="animated-role"
-                class="text-lg sm:text-xl lg:text-2xl font-JetbrainsMono text-orange-500 font-semibold tracking-wide"
-              >
-                Software Developer
-              </p>
+              <RoleCycler
+                client:load
+                className="text-lg sm:text-xl lg:text-2xl font-JetbrainsMono text-orange-500 font-semibold tracking-wide"
+              />
             </div>
 
             <button
               type="button"
               aria-label="Scroll to learn more"
-              class="scroll-indicator mt-12 flex flex-col items-center bg-transparent border-0 cursor-pointer"
+              class="scroll-indicator mt-12 mx-auto flex flex-col items-center bg-transparent border-0 cursor-pointer"
             >
               <div class="scroll-arrow">
                 <svg
@@ -222,8 +221,11 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-sm sm:text-lg lg:text-xl font-JetbrainsMono text-white/90 leading-relaxed"
                 >
-                  I write code, spin some tracks, and try to make things that
-                  people actually want to use.
+                  These days I lead a pod on the engineering team, building a
+                  greenfield automation platform — a lot of it focused on weaving
+                  AI into how we ship. After hours I'm usually tinkering with AI
+                  harnesses, DJing with friends, taking photos, or automating my
+                  apartment way more than necessary.
                 </p>
               </div>
             </div>
@@ -263,8 +265,10 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
-                  I write code for web apps and try to make them not terrible to
-                  use. Still figuring it out as I go.
+                  I lead a pod on the team building our greenfield automation
+                  platform — designing systems, shipping features, and helping the
+                  engineers I work with do the same. Mostly I just like making
+                  complicated things feel simple to use.
                 </p>
                 <div class="passion-tech">
                   <span class="tech-pill">React</span>
@@ -288,8 +292,9 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
-                  I like making my lights turn on automatically and having my
-                  house do things so I don't have to remember to.
+                  My apartment is basically a side project that never ships —
+                  sensors, automations, and a little server doing things mostly
+                  because I wanted to see if I could.
                 </p>
                 <div class="passion-tech">
                   <span class="tech-pill">Home Assistant</span>
@@ -313,13 +318,16 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
-                  I mess around with AI tools and design software. Sometimes
-                  they actually help make cool things.
+                  This is the thing I'm most into right now. At work I build AI
+                  agent tooling and harnesses that get our codebase into a shape
+                  agents can actually work in — and in my free time I'm usually
+                  building more of them, just to see how far the agentic stuff can
+                  go. Most fun I've had with code in years.
                 </p>
                 <div class="passion-tech">
-                  <span class="tech-pill">Machine Learning</span>
+                  <span class="tech-pill">AI Agents</span>
+                  <span class="tech-pill">Agentic Tooling</span>
                   <span class="tech-pill">Figma</span>
-                  <span class="tech-pill">Generative AI</span>
                 </div>
               </div>
 
@@ -339,7 +347,8 @@ import Layout from "../layouts/Layout.astro";
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
                   I dig through way too much music looking for tracks that hit
-                  just right. Sometimes I play them for other people.
+                  just right, then DJ them for friends when we're all hanging
+                  out. Strictly for the fun of it.
                 </p>
                 <div class="passion-tech">
                   <span class="tech-pill">Serato DJ</span>
@@ -363,9 +372,8 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
-                  I take photos when I travel or when something looks
-                  interesting. Mostly just for myself, but sometimes others like
-                  them too.
+                  I shoot when I travel or when the light's doing something worth
+                  stopping for. Some of it ends up in the gallery here.
                 </p>
                 <div class="passion-tech">
                   <span class="tech-pill">Adobe Creative Suite</span>
@@ -389,8 +397,9 @@ import Layout from "../layouts/Layout.astro";
                 <p
                   class="text-gray-700 font-JetbrainsMono mb-4 leading-relaxed"
                 >
-                  I spend way too much time organizing playlists and reading
-                  about music. My Spotify stats are kind of embarrassing.
+                  I go embarrassingly deep on music — playlists organized like a
+                  database, too many hours reading about it. The obsession is
+                  kind of the point.
                 </p>
                 <div class="passion-tech">
                   <span class="tech-pill">Last.fm</span>
@@ -419,8 +428,9 @@ import Layout from "../layouts/Layout.astro";
                   <blockquote
                     class="text-xl sm:text-2xl lg:text-3xl font-JetbrainsMono text-gray-800 leading-relaxed mb-6"
                   >
-                    "Good tech should feel like it's not even there—just helping
-                    you do what you want to do."
+                    "I love where people and technology meet — building things
+                    that genuinely have a positive impact on the people who use
+                    them."
                   </blockquote>
 
                   <div class="philosophy-points space-y-6 mt-8">
@@ -454,8 +464,8 @@ import Layout from "../layouts/Layout.astro";
                       <p class="font-JetbrainsMono text-gray-700">
                         <span class="font-bold text-black"
                           >Always learning:</span
-                        > There's always someone who knows more than me, and that's
-                        awesome.
+                        > I lead a small team now, and the best part is I'm still
+                        learning from everyone I work with.
                       </p>
                     </div>
                   </div>
@@ -478,8 +488,9 @@ import Layout from "../layouts/Layout.astro";
               <p
                 class="text-xl sm:text-2xl font-JetbrainsMono text-gray-600 mb-12 max-w-2xl mx-auto"
               >
-                If you need help with a project or just want to chat about
-                music, tech, or anything else, feel free to reach out.
+                Whether you've got a team that values solid engineering (and a
+                good time building it), or you just want to talk music and tech —
+                I'd love to hear from you.
               </p>
 
               <a
@@ -796,11 +807,6 @@ import Layout from "../layouts/Layout.astro";
           font-weight: 500;
         }
 
-        /* Role animation */
-        #animated-role {
-          transition: all 0.5s ease;
-        }
-
         /* CTA button */
         .cta-button {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -828,8 +834,6 @@ import Layout from "../layouts/Layout.astro";
 
       <script>
         // Tracked so everything can be torn down on navigation (View Transitions).
-        let roleInterval: number | null = null;
-        let roleStartTimeout: number | null = null;
         let cardObserver: IntersectionObserver | null = null;
         let scrollIndicatorEl: Element | null = null;
         let scrollHandler: (() => void) | null = null;
@@ -841,56 +845,7 @@ import Layout from "../layouts/Layout.astro";
           }
         }
 
-        function initializeRoleAnimation() {
-          const roleElement = document.getElementById("animated-role");
-          if (!roleElement) return;
-
-          const roles = [
-            "Software Developer",
-            "DJ & Music Fan",
-            "Smart Home Tinkerer",
-            "Photography Hobbyist",
-            "AI Experimenter",
-            "Code Writer",
-          ];
-
-          let currentIndex = 0;
-
-          function switchRole() {
-            if (!roleElement) return;
-
-            // Scale down and fade out
-            roleElement.style.transform = "scale(0.8)";
-            roleElement.style.opacity = "0";
-
-            setTimeout(() => {
-              currentIndex = (currentIndex + 1) % roles.length;
-              roleElement.textContent = roles[currentIndex];
-
-              // Scale up and fade in
-              roleElement.style.transform = "scale(1)";
-              roleElement.style.opacity = "1";
-            }, 300);
-          }
-
-          roleElement.style.transition = "all 0.5s ease";
-
-          // Start after 2 seconds, then cycle every 3 seconds.
-          roleStartTimeout = window.setTimeout(() => {
-            switchRole();
-            roleInterval = window.setInterval(switchRole, 3000);
-          }, 2000);
-        }
-
         function cleanupPageInteractions() {
-          if (roleInterval !== null) {
-            clearInterval(roleInterval);
-            roleInterval = null;
-          }
-          if (roleStartTimeout !== null) {
-            clearTimeout(roleStartTimeout);
-            roleStartTimeout = null;
-          }
           if (cardObserver) {
             cardObserver.disconnect();
             cardObserver = null;
@@ -905,8 +860,6 @@ import Layout from "../layouts/Layout.astro";
         function initializePageInteractions() {
           // Avoid duplicate handlers if this runs more than once for a page.
           cleanupPageInteractions();
-
-          initializeRoleAnimation();
 
           // Scroll indicator click
           scrollIndicatorEl = document.querySelector(".scroll-indicator");
@@ -944,6 +897,10 @@ import Layout from "../layouts/Layout.astro";
         // astro:page-load fires on the initial load and after each navigation.
         document.addEventListener("astro:page-load", initializePageInteractions);
         document.addEventListener("astro:before-swap", cleanupPageInteractions);
+
+        // Kick off immediately too, in case astro:page-load already fired for
+        // this view before the listener above was registered.
+        initializePageInteractions();
       </script>
     </BrowserWindow>
   </div>

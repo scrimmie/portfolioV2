@@ -10,7 +10,7 @@ export const ImageGrid = ({ imageSources }: { imageSources: string[] }) => {
 
   return (
     <>
-      <div className="grid w-full h-full grid-cols-3 pointer-events-auto">
+      <div className="grid w-full h-full grid-cols-2 sm:grid-cols-3 pointer-events-auto">
         {imageSources.map((image, index) => (
           <motion.img
             className="container items-center justify-center aspect-square object-cover h-full"
