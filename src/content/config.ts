@@ -10,7 +10,14 @@ const projectsCollection = defineCollection({
       logoImage: image(),
       images: z.array(image()),
       projectDate: z.string().transform((str) => new Date(str)),
-      projectLink: z.string().url().optional(),
+      // Restrict to http(s) so a stray javascript:/data: URL can't reach an href.
+      projectLink: z
+        .string()
+        .url()
+        .refine((url) => /^https?:\/\//i.test(url), {
+          message: "projectLink must be an http(s) URL",
+        })
+        .optional(),
     }),
 });
 

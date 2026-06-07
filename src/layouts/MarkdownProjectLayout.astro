@@ -6,12 +6,12 @@ import { SlickSlider } from "../components/SlickSlider";
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={frontmatter.title}>
-  <div class="flex w-full h-full items-left justify-center flex-col">
+<Layout title={frontmatter.title} description={frontmatter.description}>
+  <div class="flex w-full h-full items-start justify-center flex-col">
     <BrowserWindow url={`projects/${frontmatter.title}.terminal`}>
       <RetroTerminal title={`PROJECT: ${frontmatter.title.toUpperCase()}`}>
         <div
-          class="project-container overflow-scroll w-full h-max flex justify-center items-center flex-col"
+          class="project-container overflow-auto w-full h-max flex justify-center items-center flex-col"
         >
           <!-- Terminal Output Header -->
           <div class="terminal-output">
@@ -25,32 +25,42 @@ const { frontmatter } = Astro.props;
                 <pre class="ascii-art">{frontmatter.title.toUpperCase()}</pre>
               </div>
 
-              <div class="project-details">
+              <dl class="project-details">
                 <div class="detail-line">
-                  <span class="label">DATE:</span>
-                  <span class="value"
-                    >{frontmatter.projectDate.toString().slice(0, 15)}</span
-                  >
+                  <dt class="label">DATE:</dt>
+                  <dd class="value">
+                    {
+                      frontmatter.projectDate.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        timeZone: "UTC",
+                      })
+                    }
+                  </dd>
                 </div>
                 <div class="detail-line">
-                  <span class="label">DESC:</span>
-                  <span class="value">{frontmatter.description}</span>
+                  <dt class="label">DESC:</dt>
+                  <dd class="value">{frontmatter.description}</dd>
                 </div>
                 {
                   frontmatter.projectLink && (
                     <div class="detail-line">
-                      <span class="label">LINK:</span>
-                      <a
-                        href={frontmatter.projectLink}
-                        target="_blank"
-                        class="project-url"
-                      >
-                        {frontmatter.projectLink}
-                      </a>
+                      <dt class="label">LINK:</dt>
+                      <dd class="value">
+                        <a
+                          href={frontmatter.projectLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="project-url"
+                        >
+                          {frontmatter.projectLink}
+                        </a>
+                      </dd>
                     </div>
                   )
                 }
-              </div>
+              </dl>
             </div>
           </div>
 
@@ -65,6 +75,7 @@ const { frontmatter } = Astro.props;
               images={frontmatter.images.map((item: any) => {
                 return item.src;
               })}
+              alt={`${frontmatter.title} screenshot`}
               client:only="react"
             />
           </div>
@@ -159,16 +170,21 @@ const { frontmatter } = Astro.props;
       color: #00aa00;
       font-weight: bold;
       min-width: 60px;
+      margin: 0;
     }
 
     .value {
       color: #00ff00;
+      margin: 0;
+      overflow-wrap: anywhere;
     }
 
     .project-url {
       color: #00ccff;
       text-decoration: underline;
       cursor: pointer;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .project-url:hover {

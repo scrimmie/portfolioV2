@@ -9,7 +9,10 @@ import Logo from "../components/Logo";
 import SocialLink from "../components/SocialLink.astro";
 ---
 
-<Layout title="Creative">
+<Layout
+  title="Creative"
+  description="DrDigital — the creative side of David D'Apice: DJ sets, music, 3D printing, and photography."
+>
   <div class="w-full h-full">
     <BrowserWindow url="drdigital.nexus">
       <div class="relative w-full min-h-full overflow-auto bg-black">
@@ -89,47 +92,44 @@ import SocialLink from "../components/SocialLink.astro";
                   class="text-white font-JetbrainsMono text-sm md:text-base leading-relaxed space-y-6"
                 >
                   <p class="border-l-4 border-cyan-400 pl-4 bg-cyan-400/5 py-3">
-                    <span class="text-cyan-400 font-bold"
-                      >[NEURAL_LINK_ESTABLISHED]</span
+                    <span class="text-cyan-400 font-bold">[OFF THE CLOCK]</span
                     ><br />
-                    When disconnected from the code matrix, I dive deep into creative
-                    realms that push the boundaries of digital expression.
+                    This is DrDigital — the stuff I make and mess with when I'm not
+                    in a pull request. None of it's work; all of it's the same
+                    curiosity.
                   </p>
 
                   <p
                     class="border-l-4 border-purple-400 pl-4 bg-purple-400/5 py-3"
                   >
-                    <span class="text-purple-400 font-bold"
-                      >[AUDIO_SYNTHESIS_MODE]</span
-                    ><br />
-                    Crafting sonic landscapes through DJ'ing sessions with my crew,
-                    blending frequencies that resonate through the digital underground.
+                    <span class="text-purple-400 font-bold">[MUSIC]</span><br />
+                    I DJ with friends — nothing serious, usually just in
+                    someone's living room. Mostly it's an excuse to share music,
+                    which I'm pretty obsessive about; I'm always digging up new
+                    stuff to play.
                   </p>
 
                   <p class="border-l-4 border-pink-400 pl-4 bg-pink-400/5 py-3">
-                    <span class="text-pink-400 font-bold"
-                      >[3D_FABRICATION_PROTOCOL]</span
-                    ><br />
-                    Materializing ideas through 3D printing, transforming digital
-                    concepts into tangible reality.
+                    <span class="text-pink-400 font-bold">[GAMES]</span><br />
+                    I build small games to see how they work (most never get
+                    finished), and I play plenty of them too — it's where I go to
+                    turn my brain off after a day staring at code.
                   </p>
 
                   <p
                     class="border-l-4 border-green-400 pl-4 bg-green-400/5 py-3"
                   >
-                    <span class="text-green-400 font-bold"
-                      >[OPTICAL_CAPTURE_SYSTEM]</span
+                    <span class="text-green-400 font-bold">[PHOTOGRAPHY]</span
                     ><br />
-                    Documenting existence through the lens, freezing moments in time
-                    with photographic precision.
+                    A camera's how I slow down. Code rewards speed; this rewards
+                    patience — I like having both.
                   </p>
 
                   <div
                     class="mt-8 p-6 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-400/30 rounded-lg"
                   >
                     <p class="text-cyan-300 italic text-center text-base">
-                      "Code is poetry, but creativity is the soul's expression
-                      through infinite dimensions."
+                      &gt; same brain, different output.
                     </p>
                   </div>
                 </div>
@@ -168,25 +168,6 @@ import SocialLink from "../components/SocialLink.astro";
                           stroke-linejoin="round"
                           d="m17.5 6.51l.01-.011"></path>
                       </g>
-                    </svg>
-                  </SocialLink>
-
-                  <SocialLink
-                    platform="Twitch"
-                    link="https://www.twitch.tv/thedemoroom"
-                    index={1}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 24 24"
-                      class="w-full h-full"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M11.64 5.93h1.43v4.28h-1.43m3.93-4.28H17v4.28h-1.43M7 2L3.43 5.57v12.86h4.28V22l3.58-3.57h2.85L20.57 12V2m-1.43 9.29l-2.85 2.85h-2.86l-2.5 2.5v-2.5H7.71V3.43h11.43Z"
-                      ></path>
                     </svg>
                   </SocialLink>
                 </div>

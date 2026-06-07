@@ -2,20 +2,35 @@
 import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
 import { ImageGrid } from "../components/ImageGrid";
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
-const images = await Astro.glob("/src/assets/photos/*").then((files) => {
-  return files.map((file) => file.default);
-});
+// Eagerly import every photo, then generate optimized WebP versions so the
+// gallery ships resized images instead of multi-megabyte source JPEGs.
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/photos/*.{jpg,jpeg,png,webp}",
+  { eager: true }
+);
+
+const optimizedPhotos = await Promise.all(
+  Object.entries(photoModules)
+    .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+    .map(([, module]) =>
+      getImage({ src: module.default, format: "webp", width: 1200 })
+    )
+);
+
+const imageSources = optimizedPhotos.map((image) => image.src);
 ---
 
-<Layout title="Photography">
-  <div class="flex w-full h-full items-left justify-center flex-col">
+<Layout
+  title="Photography"
+  description="A gallery of photography by David D'Apice."
+>
+  <div class="flex w-full h-full items-start justify-center flex-col">
     <BrowserWindow url="photography.com">
-      <div class="overflow-scroll w-full h-full">
-        <ImageGrid
-          imageSources={images.map((image) => image.src)}
-          client:only="react"
-        />
+      <div class="overflow-auto w-full h-full">
+        <ImageGrid imageSources={imageSources} client:only="react" />
       </div>
     </BrowserWindow>
   </div>

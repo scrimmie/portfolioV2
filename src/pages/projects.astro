@@ -6,11 +6,14 @@ import ImageCarousel from "../components/ImageCarousel.astro";
 const allProjects = await getCollection("projects");
 ---
 
-<Layout title="Projects">
-  <div class="flex w-full h-full items-left justify-center flex-col">
+<Layout
+  title="Projects"
+  description="A showcase of David D'Apice's software projects, from Spotify-powered apps to full-stack builds."
+>
+  <div class="flex w-full h-full items-start justify-center flex-col">
     <BrowserWindow url="dev.com">
       <div
-        class="flex h-full w-full flex-col items-center justify-center overflow-scroll bg-white bg-opacity-30 bg-clip-padding backdrop-blur-md backdrop-filter"
+        class="flex h-full w-full flex-col items-center justify-center overflow-auto bg-white bg-opacity-30 bg-clip-padding backdrop-blur-md backdrop-filter"
       >
         <ImageCarousel projects={allProjects} />
       </div>
