@@ -122,8 +122,8 @@ export default function Player() {
 
   const fetchCurrentTrack = useCallback(async () => {
     try {
-      // Public, read-only endpoint — no credentials needed (a static client
-      // can't hold a secret; the worker is gated by a CORS origin allowlist).
+      // Public, read-only endpoint, no credentials needed (a static client
+      // can't hold a secret, and the worker is gated by a CORS origin allowlist).
       const r = await fetch(CURRENT_TRACK_URL);
       if (!r.ok || !isActiveRef.current) return;
 
@@ -144,7 +144,7 @@ export default function Player() {
         setProgressMs(0);
       }
     } catch {
-      // Network/parse error — keep the last known state and retry next tick.
+      // Network/parse error, keep the last known state and retry next tick.
     }
   }, []);
 

@@ -70,7 +70,7 @@ const DockIcon = ({
         {route.name}
       </span>
 
-      {/* Squircle tile — width & height animate so siblings reflow (no overlap) */}
+      {/* Squircle tile, width & height animate so siblings reflow (no overlap) */}
       <motion.div
         ref={tileRef}
         style={{ width: size, height: size }}
