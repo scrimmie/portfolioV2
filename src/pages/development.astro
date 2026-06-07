@@ -4,12 +4,15 @@ import RetroTerminal from "../components/RetroTerminal.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Development">
-  <div class="flex w-full h-full items-left justify-center flex-col">
+<Layout
+  title="Development"
+  description="The languages, technologies, and experience behind David D'Apice's full-stack development work."
+>
+  <div class="flex w-full h-full items-start justify-center flex-col">
     <BrowserWindow url="dev.terminal">
       <RetroTerminal title="DEVELOPMENT PROFILE">
         <div
-          class="dev-container flex h-full w-full items-start justify-start overflow-scroll"
+          class="dev-container flex h-full w-full items-start justify-start overflow-auto"
         >
           <div class="dev-section p-4">
             <div class="command-line">

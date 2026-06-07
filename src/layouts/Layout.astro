@@ -7,19 +7,46 @@ interface Props {
 import { ViewTransitions } from "astro:transitions";
 import image from "../assets/backgrounds/background.jpg";
 import { Image } from "astro:assets";
-const { title } = Astro.props;
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const SITE_NAME = "David D'Apice";
+const {
+  title,
+  description = "David D'Apice — Full-Stack Developer, Photographer & Creative.",
+} = Astro.props;
+// Give every page a unique, descriptive <title> without double-printing the name.
+const pageTitle = title.includes(SITE_NAME)
+  ? title
+  : `${title} — ${SITE_NAME}`;
 ---
 
 <!doctype html>
 <html lang="en" class="overflow-hidden">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="David D'Apice Portfolio" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph / social previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image.src} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image.src} />
+
     <ViewTransitions />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
   </head>
   <body class="overflow-hidden">
     <!-- Mac-style top bar -->

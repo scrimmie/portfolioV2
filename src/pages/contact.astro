@@ -3,7 +3,10 @@ import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Contact - David D'Apice">
+<Layout
+  title="Contact - David D'Apice"
+  description="Get in touch with David D'Apice — collaborations, projects, and conversations welcome."
+>
   <BrowserWindow url="mail.dapice.dev/inbox">
     <div class="flex h-full bg-gray-50">
       <!-- Sidebar -->
@@ -18,7 +21,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
             <div>
               <div class="font-medium text-gray-900">You</div>
-              <div class="text-sm text-gray-500">you@you.com</div>
+              <div class="text-sm text-gray-500">Your inbox</div>
             </div>
           </div>
         </div>
@@ -449,8 +452,3 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </BrowserWindow>
 </Layout>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
-/>

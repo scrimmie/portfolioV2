@@ -313,22 +313,39 @@ const { title = "TERMINAL" } = Astro.props;
 </style>
 
 <script>
+  let timeIntervalId: number | undefined;
+
   function updateTime() {
     const timeElement = document.getElementById("terminal-time");
-    if (timeElement) {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString("en-US", {
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-      timeElement.textContent = timeString;
+    if (!timeElement) return;
+    const now = new Date();
+    timeElement.textContent = now.toLocaleTimeString("en-US", {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  }
+
+  function stopClock() {
+    if (timeIntervalId !== undefined) {
+      clearInterval(timeIntervalId);
+      timeIntervalId = undefined;
     }
   }
 
-  // Update time every second
-  updateTime();
-  setInterval(updateTime, 1000);
+  function startClock() {
+    stopClock();
+    // Only run the clock on pages that actually have the terminal.
+    if (!document.getElementById("terminal-time")) return;
+    updateTime();
+    timeIntervalId = window.setInterval(updateTime, 1000);
+  }
+
+  startClock();
+  // Re-init after View Transition navigations and clean up before each swap so
+  // the interval never leaks onto pages without a terminal.
+  document.addEventListener("astro:after-swap", startClock);
+  document.addEventListener("astro:before-swap", stopClock);
 </script>
 

@@ -1,6 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PiVinylRecordThin } from "react-icons/pi";
+
+const CURRENT_TRACK_URL = "https://spotify-worker.dapice.dev/currentTrack";
+const POLL_INTERVAL_MS = 15000;
+
+// The worker response is an external trust boundary; only let https: URLs from
+// it reach an href/src so a compromised/MITM'd response can't inject a
+// javascript:/data: URI into the DOM.
+const safeHttpsUrl = (url?: string): string | undefined => {
+  if (!url) return undefined;
+  try {
+    return new URL(url).protocol === "https:" ? url : undefined;
+  } catch {
+    return undefined;
+  }
+};
 
 interface SpotifyResponse {
   isPlaying: boolean;
@@ -97,37 +112,60 @@ export default function Player() {
   const [trackProgress, setTrackProgress] = useState<number>();
   const [duration, setDuration] = useState<number>();
 
+  const isActiveRef = useRef(true);
   useEffect(() => {
-    async function get() {
-      if (isPlaying === false) {
-        const r = await fetch(
-          "https://spotify-worker.dapice.dev/currentTrack",
-          {
-            headers: {
-              Authorization: `Basic dGVzdFNwb3RpZnk6UG9ydGZvbGlvU2l0ZQ==`,
-            },
-          }
-        );
-        if (r.status === 200) {
-          const body = (await r.json()) as SpotifyResponse;
-          if (body.isPlaying) {
-            setIsPlaying(body.isPlaying);
-            setTrack(body.currentTrack);
-            setTrackProgress(Math.round(body.currentTrackProgress! / 1000));
-          }
-        }
+    return () => {
+      isActiveRef.current = false;
+    };
+  }, []);
+
+  const fetchCurrentTrack = useCallback(async () => {
+    try {
+      const r = await fetch(CURRENT_TRACK_URL, {
+        headers: {
+          Authorization: `Basic dGVzdFNwb3RpZnk6UG9ydGZvbGlvU2l0ZQ==`,
+        },
+      });
+      if (!r.ok || !isActiveRef.current) return;
+
+      const body = (await r.json()) as SpotifyResponse;
+      if (!isActiveRef.current) return;
+
+      if (
+        body.isPlaying &&
+        body.currentTrack &&
+        body.currentTrackProgress != null
+      ) {
+        setTrack(body.currentTrack);
+        setTrackProgress(Math.round(body.currentTrackProgress / 1000));
+        setIsPlaying(true);
+      } else {
+        setIsPlaying(false);
+        setTrack(undefined);
+        setTrackProgress(undefined);
       }
+    } catch {
+      // Network/parse error — keep the last known state and retry next tick.
     }
-    get();
-  }, [isPlaying]);
+  }, []);
+
+  // Poll the worker on a fixed interval so the widget recovers from the idle
+  // state (and picks up new tracks) without depending on render state.
+  useEffect(() => {
+    fetchCurrentTrack();
+    const id = setInterval(fetchCurrentTrack, POLL_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [fetchCurrentTrack]);
 
   useEffect(() => {
-    if (track && trackProgress) {
-      setDuration(
-        Math.round(Math.round(track?.duration_ms / 1000) - trackProgress) + 5
-      );
+    if (track && trackProgress != null) {
+      const totalSeconds = Math.round(track.duration_ms / 1000);
+      const remaining = totalSeconds - trackProgress;
+      setDuration(remaining > 0 ? remaining : undefined);
+    } else {
+      setDuration(undefined);
     }
-  }, [trackProgress]);
+  }, [track, trackProgress]);
 
   return (
     <motion.div
@@ -159,9 +197,9 @@ export default function Player() {
         }}
       />
 
-      <AnimatePresence>
-        <div className="relative z-10 w-full h-full p-6">
-          {isPlaying && track && duration && trackProgress ? (
+      <div className="relative z-10 w-full h-full p-6">
+        <AnimatePresence mode="wait">
+          {isPlaying && track && duration != null && trackProgress != null ? (
             <motion.div
               key="playing"
               initial={{ opacity: 0, y: 20 }}
@@ -218,7 +256,7 @@ export default function Player() {
                     transition={{ duration: 3, repeat: Infinity }}
                   />
                   <motion.a
-                    href={track.album.external_urls.spotify}
+                    href={safeHttpsUrl(track.album.external_urls.spotify)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative block"
@@ -227,7 +265,7 @@ export default function Player() {
                   >
                     <img
                       className="relative w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl border-2 border-cyan-400/50 hover:border-cyan-400 transition-all duration-300 shadow-lg"
-                      src={track.album.images[0].url}
+                      src={safeHttpsUrl(track.album.images?.[0]?.url)}
                       alt={track.album.name}
                     />
                     <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 rounded-xl flex items-center justify-center">
@@ -247,7 +285,7 @@ export default function Player() {
                 >
                   {/* Song Title */}
                   <motion.a
-                    href={track.external_urls.spotify}
+                    href={safeHttpsUrl(track.external_urls.spotify)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block group mb-2"
@@ -260,20 +298,20 @@ export default function Player() {
 
                   {/* Artist */}
                   <motion.a
-                    href={track.artists[0].external_urls.spotify}
+                    href={safeHttpsUrl(track.artists?.[0]?.external_urls?.spotify)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block group mb-1"
                     whileHover={{ x: 2 }}
                   >
                     <p className="text-cyan-400 font-JetbrainsMono text-sm md:text-base font-medium truncate group-hover:text-cyan-300 transition-colors duration-300">
-                      {track.artists[0].name}
+                      {track.artists?.[0]?.name}
                     </p>
                   </motion.a>
 
                   {/* Album */}
                   <motion.a
-                    href={track.album.external_urls.spotify}
+                    href={safeHttpsUrl(track.album.external_urls.spotify)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block group"
@@ -295,19 +333,26 @@ export default function Player() {
               >
                 <div className="relative h-1 bg-gray-700 rounded-full overflow-hidden">
                   <motion.div
+                    key={track.id}
                     initial={{
-                      width: `${Math.round(
-                        (trackProgress! /
-                          Math.round(track.duration_ms / 1000)) *
-                          100
+                      width: `${Math.min(
+                        100,
+                        Math.max(
+                          0,
+                          Math.round(
+                            (trackProgress /
+                              Math.max(1, Math.round(track.duration_ms / 1000))) *
+                              100
+                          )
+                        )
                       )}%`,
                     }}
                     animate={{ width: "100%" }}
                     transition={{ duration: duration, ease: "linear" }}
                     className="h-full bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full relative"
                     onAnimationComplete={() => {
-                      setDuration(undefined);
-                      setIsPlaying(false);
+                      // Track finished — refresh immediately to pick up the next one.
+                      fetchCurrentTrack();
                     }}
                   >
                     <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
@@ -361,8 +406,8 @@ export default function Player() {
               </motion.div>
             </motion.div>
           )}
-        </div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }

@@ -7,18 +7,21 @@ import {
   TfiEmail,
 } from "react-icons/tfi";
 import { IoCode } from "react-icons/io5";
+import type { ReactNode } from "react";
+import { ROUTES } from "../lib/routes";
+
+// Icon per route, keyed by the route's stable `page` value.
+const NAV_ICONS: Record<string, ReactNode> = {
+  home: <TfiHome />,
+  aboutme: <TfiUser />,
+  development: <IoCode />,
+  projects: <TfiFolder />,
+  photography: <TfiCamera />,
+  creative: <TfiBrushAlt />,
+  contact: <TfiEmail />,
+};
 
 export const Navigation = () => {
-  const navLinks = [
-    { name: "Home", href: "/", id: 1, icon: <TfiHome /> },
-    { name: "About Me", href: "/aboutMe", id: 2, icon: <TfiUser /> },
-    { name: "Development", href: "/development", id: 3, icon: <IoCode /> },
-    { name: "Projects", href: "/projects", id: 4, icon: <TfiFolder /> },
-    { name: "Photography", href: "/photography", id: 5, icon: <TfiCamera /> },
-    { name: "Creative", href: "/creative", id: 6, icon: <TfiBrushAlt /> },
-    { name: "Contact", href: "/contact", id: 7, icon: <TfiEmail /> },
-  ];
-
   return (
     <nav className="w-full flex justify-center">
       {/* Dock container */}
@@ -26,11 +29,11 @@ export const Navigation = () => {
         {/* Dock background with glassmorphism effect */}
         <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-xl px-3 py-2 shadow-xl">
           <div className="flex items-center space-x-2">
-            {navLinks.map(({ name, href, id, icon }) => (
+            {ROUTES.map(({ name, href, page }) => (
               <a
-                key={id}
+                key={page}
                 href={href}
-                data-page={name.toLowerCase().replace(" ", "")}
+                data-page={page}
                 className="group relative flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
                 title={name}
               >
@@ -38,7 +41,7 @@ export const Navigation = () => {
                 <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white/5 group-hover:bg-white/15 rounded-lg border border-white/10 group-hover:border-white/30 transition-all duration-300 group-hover:shadow-md group-hover:shadow-white/20">
                   {/* Icon */}
                   <div className="text-white text-base sm:text-lg transition-all duration-300 group-hover:scale-105">
-                    {icon}
+                    {NAV_ICONS[page]}
                   </div>
 
                   {/* Subtle inner glow */}

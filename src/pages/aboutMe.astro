@@ -5,8 +5,11 @@ import BrowserWindow from "../components/BrowserWindow.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About Me">
-  <div class="flex w-full h-full items-left justify-center flex-col">
+<Layout
+  title="About Me"
+  description="Get to know David D'Apice — full-stack developer, DJ, photographer, smart-home tinkerer, and AI experimenter."
+>
+  <div class="flex w-full h-full items-start justify-center flex-col">
     <BrowserWindow url="aboutMe.com">
       <div class="w-full h-full overflow-y-auto bg-white about-container">
         <!-- Shorter Splash Screen Hero -->
@@ -162,13 +165,18 @@ import Layout from "../layouts/Layout.astro";
               </p>
             </div>
 
-            <div class="scroll-indicator mt-12 flex flex-col items-center">
-              <div class="scroll-arrow cursor-pointer">
+            <button
+              type="button"
+              aria-label="Scroll to learn more"
+              class="scroll-indicator mt-12 flex flex-col items-center bg-transparent border-0 cursor-pointer"
+            >
+              <div class="scroll-arrow">
                 <svg
                   class="w-6 h-6 text-gray-400 animate-bounce"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
@@ -180,7 +188,7 @@ import Layout from "../layouts/Layout.astro";
               <p class="text-sm font-JetbrainsMono text-gray-400 mt-2">
                 Discover more
               </p>
-            </div>
+            </button>
           </div>
         </section>
 
@@ -819,23 +827,23 @@ import Layout from "../layouts/Layout.astro";
       </style>
 
       <script>
-        let roleInterval: number | null = null; // Store interval ID for cleanup
+        // Tracked so everything can be torn down on navigation (View Transitions).
+        let roleInterval: number | null = null;
+        let roleStartTimeout: number | null = null;
+        let cardObserver: IntersectionObserver | null = null;
+        let scrollIndicatorEl: Element | null = null;
+        let scrollHandler: (() => void) | null = null;
+
+        function scrollToImageSection() {
+          const imageSection = document.getElementById("image-section");
+          if (imageSection) {
+            imageSection.scrollIntoView({ behavior: "smooth" });
+          }
+        }
 
         function initializeRoleAnimation() {
           const roleElement = document.getElementById("animated-role");
-
-          if (!roleElement) {
-            console.log("Role element not found, retrying...");
-            setTimeout(initializeRoleAnimation, 100);
-            return;
-          }
-
-          // Clear any existing interval to prevent duplicates
-          if (roleInterval) {
-            clearInterval(roleInterval);
-          }
-
-          console.log("Starting role animation...");
+          if (!roleElement) return;
 
           const roles = [
             "Software Developer",
@@ -865,34 +873,51 @@ import Layout from "../layouts/Layout.astro";
             }, 300);
           }
 
-          // Initial setup
           roleElement.style.transition = "all 0.5s ease";
 
-          // Start the animation after 2 seconds, then continue every 3 seconds
-          setTimeout(() => {
+          // Start after 2 seconds, then cycle every 3 seconds.
+          roleStartTimeout = window.setTimeout(() => {
             switchRole();
-            roleInterval = setInterval(switchRole, 3000);
+            roleInterval = window.setInterval(switchRole, 3000);
           }, 2000);
         }
 
+        function cleanupPageInteractions() {
+          if (roleInterval !== null) {
+            clearInterval(roleInterval);
+            roleInterval = null;
+          }
+          if (roleStartTimeout !== null) {
+            clearTimeout(roleStartTimeout);
+            roleStartTimeout = null;
+          }
+          if (cardObserver) {
+            cardObserver.disconnect();
+            cardObserver = null;
+          }
+          if (scrollIndicatorEl && scrollHandler) {
+            scrollIndicatorEl.removeEventListener("click", scrollHandler);
+          }
+          scrollIndicatorEl = null;
+          scrollHandler = null;
+        }
+
         function initializePageInteractions() {
-          // Initialize role animation
+          // Avoid duplicate handlers if this runs more than once for a page.
+          cleanupPageInteractions();
+
           initializeRoleAnimation();
 
           // Scroll indicator click
-          const scrollIndicator = document.querySelector(".scroll-indicator");
-          if (scrollIndicator) {
-            scrollIndicator.addEventListener("click", () => {
-              const imageSection = document.getElementById("image-section");
-              if (imageSection) {
-                imageSection.scrollIntoView({ behavior: "smooth" });
-              }
-            });
+          scrollIndicatorEl = document.querySelector(".scroll-indicator");
+          if (scrollIndicatorEl) {
+            scrollHandler = scrollToImageSection;
+            scrollIndicatorEl.addEventListener("click", scrollHandler);
           }
 
           // Stagger animation for passion cards
           const passionCards = document.querySelectorAll(".passion-card");
-          const observer = new IntersectionObserver(
+          cardObserver = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
@@ -907,24 +932,18 @@ import Layout from "../layouts/Layout.astro";
             { threshold: 0.1 }
           );
 
-          passionCards.forEach((card, index) => {
+          passionCards.forEach((card) => {
             const cardElement = card as HTMLElement;
             cardElement.style.opacity = "0";
             cardElement.style.transform = "translateY(30px)";
             cardElement.style.transition = "all 0.6s ease";
-            observer.observe(card);
+            cardObserver!.observe(card);
           });
         }
 
-        // Handle both page load and client-side navigation
-        document.addEventListener(
-          "DOMContentLoaded",
-          initializePageInteractions
-        );
-        document.addEventListener(
-          "astro:page-load",
-          initializePageInteractions
-        );
+        // astro:page-load fires on the initial load and after each navigation.
+        document.addEventListener("astro:page-load", initializePageInteractions);
+        document.addEventListener("astro:before-swap", cleanupPageInteractions);
       </script>
     </BrowserWindow>
   </div>
